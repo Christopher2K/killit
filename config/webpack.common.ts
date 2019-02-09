@@ -2,11 +2,16 @@ import path from 'path'
 import { Configuration } from 'webpack'
 import HTMLWebpackPlugin from 'html-webpack-plugin'
 import ForkTSCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
+import WebpackNotifierPlugin from 'webpack-notifier'
+import TSConfigPathsWebpackPlugin from 'tsconfig-paths-webpack-plugin'
 
 const commonConfig: Configuration = {
   entry: path.resolve(__dirname, '../src/index.tsx'),
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+    plugins: [
+      new TSConfigPathsWebpackPlugin()
+    ]
   },
   output: {
     filename: '[name].bundle.js',
@@ -24,6 +29,8 @@ const commonConfig: Configuration = {
           '@babel/react'
         ],
         plugins: [
+          '@babel/proposal-class-properties',
+          '@babel/proposal-object-rest-spread',
           ['emotion', {
             sourceMap: true,
             autoLabel: process.env.NODE_ENV !== 'production',
@@ -31,6 +38,13 @@ const commonConfig: Configuration = {
             cssPropOptimization: true
           }]
         ]
+      }
+    }, {
+      test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
+      loader: 'file-loader',
+      options: {
+        name: '[name].[ext]',
+        outputPath: 'fonts/'
       }
     }]
   },
@@ -42,6 +56,9 @@ const commonConfig: Configuration = {
       tslint: path.resolve(__dirname, '../tslint.json'),
       tslintAutoFix: true,
       reportFiles: ['src/**/*.{ts,tsx}']
+    }),
+    new WebpackNotifierPlugin({
+      alwaysNotify: true
     })
   ]
 }
