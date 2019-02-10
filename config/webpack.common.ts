@@ -54,7 +54,7 @@ const commonConfig: Configuration = {
     }),
     new ForkTSCheckerWebpackPlugin({
       tslint: path.resolve(__dirname, '../tslint.json'),
-      tslintAutoFix: true,
+      tslintAutoFix: process.env.NODE_ENV === 'production',
       reportFiles: ['src/**/*.{ts,tsx}']
     }),
     new WebpackNotifierPlugin({

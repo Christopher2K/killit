@@ -1,13 +1,14 @@
 import * as React from 'react'
 import { Global } from '@emotion/core'
-import { BrowserRouter, Switch } from 'react-router-dom'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Prismic from 'prismic-javascript'
 import ResolvedApi from 'prismic-javascript/d.ts/ResolvedApi'
 
 import { PRISMIC_ENDPOINT } from 'settings'
 import { APIContext } from 'utils/prismic'
 import { global } from 'styles/global'
-import { Navbar } from 'components'
+import { Navbar, PageContent, Root } from 'components'
+import * as Views from 'views'
 
 export type Props = {}
 
@@ -33,7 +34,10 @@ export class App extends React.Component<Props, State> {
         <BrowserRouter>
           <Switch>
             <APIContext.Provider value={this.state.prismicApi}>
-              <Navbar />
+              <Root>
+                <Navbar />
+                <Route path='/a-propos' component={Views.InfoView} />
+              </Root>
             </APIContext.Provider>
           </Switch>
         </BrowserRouter>

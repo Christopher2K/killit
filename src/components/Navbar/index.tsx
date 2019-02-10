@@ -1,19 +1,24 @@
 import * as React from 'react'
+import { withRouter, RouteComponentProps } from 'react-router'
 
 import { Root } from './Root'
 import { Brand } from './Brand'
 import { Items } from './Items'
 
-export type Props = {}
+export type Props = RouteComponentProps & {}
 
-export const Navbar: React.FunctionComponent<Props> = () => {
+const NavbarComponent: React.FunctionComponent<Props> = ({ location }) => {
+  const { pathname } = location
   return (
-    <Root>
+    <Root currentPath={pathname}>
       <Brand
+        currentPath={pathname}
         firstRow='Eunice'
         lastRow='Tchitchiama'
       />
-      <Items />
-    </Root>
+      <Items currentPath={pathname} />
+    </Root >
   )
 }
+
+export const Navbar = withRouter(NavbarComponent)

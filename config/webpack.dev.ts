@@ -9,7 +9,8 @@ const devConfig: Configuration = {
   devServer: {
     contentBase: path.resolve(__dirname, '../dist'),
     hot: true,
-    overlay: true
+    overlay: true,
+    historyApiFallback: true
   },
   mode: 'development',
   plugins: [

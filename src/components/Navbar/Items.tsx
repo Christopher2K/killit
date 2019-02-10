@@ -4,29 +4,48 @@ import styled from '@emotion/styled'
 import { NavLink } from 'react-router-dom'
 
 import * as Variables from 'styles/variable'
+import { titleFontStyle } from 'styles/mixins'
 
-const Item = styled(NavLink)`
-  font-family: ${Variables.titleFont};
-  font-size: 2rem;
-  color: ${Variables.Colors.regentGray};
-  text-decoration: none;
-  margin-right: ${Variables.Spaces.small};
+type RootProps = {
+  currentPath: string
+}
 
-  &:last-of-type {
-    margin-right: 0;
+const Root = styled(Flex)`
+  width: 235px;
+  a {
+    color: ${(props: RootProps) => getLinkColor(props.currentPath)};
   }
 `
 
-export type Props = {}
+const Item = styled(NavLink)`
+  ${titleFontStyle}
+  font-size: 2rem;
+  color: ${Variables.Colors.regentGray};
+  text-decoration: none;
+`
 
-export const Items: React.FunctionComponent<Props> = () => (
-  <Flex
+export type Props = {
+  currentPath: string
+}
+
+export const Items: React.FunctionComponent<Props> = ({
+  currentPath
+}) => (
+  <Root
     direction='row'
-    justify='flex-start'
+    justify='space-between'
     align='flex-start'
+    currentPath={currentPath}
   >
     <Item to='/'>Projet</Item>
-    <Item to='/'>À propos</Item>
+    <Item to='/a-propos'>À propos</Item>
     <Item to='/'>Contact</Item>
-  </Flex>
+  </Root>
 )
+
+function getLinkColor (path: string): string {
+  switch (path) {
+    case '/': return Variables.Colors.linkWater
+    default: return Variables.Colors.shuttleGray
+  }
+}

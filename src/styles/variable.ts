@@ -5,7 +5,9 @@ export const Colors = {
   paleSky: '#676F7C',
   shuttleGray: '#525A69',
   trout: '#505866',
-  tuna: '#2F343D'
+  tuna: '#2F343D',
+  white: '#FFFFFF',
+  catskillWhite: '#E3E9F2'
 }
 
 export const Spaces = {
@@ -17,4 +19,7 @@ export const Spaces = {
 }
 
 export const titleFont = 'Bluu Next'
+export const titleLineHeight = '1.5'
 export const bodyFont = 'Source Sans Pro'
+
+export const navbarTopGap = '120px'

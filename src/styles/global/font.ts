@@ -24,7 +24,7 @@ export const font = css`
          url('${bluuNextBoldItalicWoff}') format('woff'),
          url('${bluuNextBoldItalicTtf}') format('truetype');
     font-weight: normal;
-    font-style: normal;
+    font-style: italic;
   }
 
   @font-face {
