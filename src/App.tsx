@@ -7,7 +7,7 @@ import ResolvedApi from 'prismic-javascript/d.ts/ResolvedApi'
 import { PRISMIC_ENDPOINT } from 'settings'
 import { APIContext } from 'utils/prismic'
 import { global } from 'styles/global'
-import { Navbar, PageContent, Root } from 'components'
+import { Navbar, Root } from 'components'
 import * as Views from 'views'
 
 export type Props = {}
