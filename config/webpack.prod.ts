@@ -1,4 +1,4 @@
-import path from 'path'
+
 import { Configuration } from 'webpack'
 import merge from 'webpack-merge'
 

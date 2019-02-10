@@ -44,6 +44,8 @@
     "webpack-notifier": "1.7.0"
   },
   "husky": {
-    "precommit": "tsc"
+    "hooks": {
+      "pre-commit": "tsc"
+    }
   }
 }
