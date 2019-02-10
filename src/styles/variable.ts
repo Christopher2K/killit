@@ -15,3 +15,6 @@ export const Spaces = {
   large: '4rem',
   largest: '5rem'
 }
+
+export const titleFont = 'Bluu Next'
+export const bodyFont = 'Source Sans Pro'

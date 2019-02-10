@@ -1,7 +1,9 @@
 import * as React from 'react'
 import { Global } from '@emotion/core'
+import { BrowserRouter, Switch } from 'react-router-dom'
 
 import { global } from 'styles/global'
+import { Navbar } from 'components'
 
 export type Props = {}
 
@@ -14,7 +16,12 @@ export class App extends React.Component<Props, State> {
     return (
       <>
         <Global styles={global} />
-        <div>Hello</div>
+        <BrowserRouter>
+          <Switch>
+            <Navbar />
+
+          </Switch>
+        </BrowserRouter>
       </>
     )
   }

@@ -10,7 +10,7 @@ import sourceSansProRegularTtf from 'assets/fonts/SourceSansPro-Regular.ttf'
 
 export const font = css`
   @font-face {
-    font-family: 'bluu';
+    font-family: 'Bluu Next';
     src: url('${bluuNextBoldWoff2}') format('woff2'),
          url('${bluuNextBoldWoff}') format('woff'),
          url('${bluuNextBoldTtf}') format('truetype');
@@ -19,7 +19,7 @@ export const font = css`
   }
 
   @font-face {
-    font-family: 'bluu';
+    font-family: 'Bluu Next';
     src: url('${bluuNextBoldItalicWoff2}') format('woff2'),
          url('${bluuNextBoldItalicWoff}') format('woff'),
          url('${bluuNextBoldItalicTtf}') format('truetype');
