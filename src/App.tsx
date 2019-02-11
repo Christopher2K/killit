@@ -36,7 +36,12 @@ export class App extends React.Component<Props, State> {
             <APIContext.Provider value={this.state.prismicApi}>
               <Root>
                 <Navbar />
+                <Route path='/' component={Views.ProjectsView} />
+                <Route path='/projet/:name' component={Views.SingleProjectView} />
                 <Route path='/a-propos' component={Views.InfoView} />
+                <Route path='/contact' component={Views.ContactView} />
+                <Route path='/existe-pas' component={Views.NotFoundView} />
+                <Route path='/erreur' component={Views.ErrorView} />
               </Root>
             </APIContext.Provider>
           </Switch>

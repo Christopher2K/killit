@@ -1,1 +1,7 @@
+export { ProjectsView } from './ProjectsView'
+export { SingleProjectView } from './SingleProjectView'
 export { InfoView } from './InfoView'
+export { ContactView } from './ContactView'
+export { ErrorView } from './ErrorView'
+export { NotFoundView } from './NotFoundView'
+export { AppLoadingView } from './AppLoadingView'
