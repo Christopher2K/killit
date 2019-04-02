@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router'
 import { PageContent, Container } from 'components'
 
 import { Header } from './Header'
+import { Description } from './Description'
 
 export type RouterParams = {
   name: string
@@ -24,6 +25,7 @@ export class SingleProjectView extends React.Component<Props, State> {
       <PageContent>
         <Container>
           <Header />
+          <Description />
         </Container>
       </PageContent>
     )
