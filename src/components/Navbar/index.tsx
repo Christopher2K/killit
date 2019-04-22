@@ -35,6 +35,7 @@ const NavbarComponent: React.FunctionComponent<Props> = ({ location }) => {
         currentPath={pathname}
         open={open}
         onCloseClick={closeMenu}
+        onLinkClick={closeMenu}
       />
       <Burger
         onClick={openMenu}

@@ -76,10 +76,12 @@ export type Props = {
   currentPath: string
   open: boolean
   onCloseClick (): void
+  onLinkClick (): void
 }
 
 export const Items: React.FunctionComponent<Props> = ({
   currentPath,
+  onLinkClick,
   onCloseClick,
   open
 }) => (
@@ -96,14 +98,17 @@ export const Items: React.FunctionComponent<Props> = ({
       <img src={closeIcon}/>
     </CloseButton>
     <Item
+      onClick={onLinkClick}
       to='/'>
       Projet
     </Item>
     <Item
+      onClick={onLinkClick}
       to='/a-propos'>
       À propos
     </Item>
     <Item
+      onClick={onLinkClick}
       to='/'>
       Contact
     </Item>

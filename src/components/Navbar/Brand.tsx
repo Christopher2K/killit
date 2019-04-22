@@ -31,6 +31,7 @@ const Title = styled.h1`
 
   ${mobile} {
     font-size: 2.2rem;
+    margin-left: ${props => props.withLeftOffset ? Variables.Spaces.tiny : 0};
   }
 `
 
