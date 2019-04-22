@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 
 import * as Variables from 'styles/variable'
 import { titleFontStyle } from 'styles/mixins'
+import { mobile } from 'styles/responsive'
 
 export const Description = styled.div`
   p {
@@ -13,6 +14,11 @@ export const Description = styled.div`
     width: 100%;
 
     margin-bottom: 7.5rem;
+
+    ${mobile} {
+      font-size: 1.8rem;
+      margin-bottom: 3rem;
+    }
 
     a {
       color: ${Variables.Colors.dodgerBlue};
