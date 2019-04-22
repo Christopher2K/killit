@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-
+import { mobile } from 'styles/responsive'
 // import * as Variables from 'styles/variable'
 
 export type Props = {
@@ -10,7 +10,7 @@ export const Root = styled.nav`
   position: fixed;
   left: 0;
   right: 0;
-  /* Desktop style */
+
   width: 100%;
   max-width: 1440px;
   margin: auto;
@@ -25,13 +25,8 @@ export const Root = styled.nav`
   justify-content: space-between;
   align-items: flex-start;
 
-  /* TODO: Mobile style */
-  ${(_: Props) => ''}
+  ${mobile} {
+    padding: 15px 25px;
+    z-index: 1000;
+  }
 `
-
-// function getBackgroundColor (path: string): string {
-//   switch (path) {
-//     case '/': return Variables.Colors.dodgerBlue
-//     default: return Variables.Colors.linkWater
-//   }
-// }

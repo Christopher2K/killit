@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 import { Flex } from 'components'
 import * as Variables from 'styles/variable'
 import { titleFontStyle } from 'styles/mixins'
+import { mobile } from 'styles/responsive'
 
 type RootProps = {
   currentPath: string
@@ -12,6 +13,10 @@ type RootProps = {
 const Root = styled(Flex)`
   width: 235px;
   color: ${(props: RootProps) => getBackgroundColor(props.currentPath)};
+
+  ${mobile} {
+    width: 140px;
+  }
 `
 
 type TitleProps = {
@@ -23,6 +28,10 @@ const Title = styled.h1`
   font-size: 4rem;
   color: inherit;
   margin-left: ${(props: TitleProps) => props.withLeftOffset ? Variables.Spaces.small : 0};
+
+  ${mobile} {
+    font-size: 2.2rem;
+  }
 `
 
 export type Props = {
