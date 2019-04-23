@@ -4,6 +4,7 @@ import { PageContent, Container } from 'components'
 
 import { Header } from './Header'
 import { Description } from './Description'
+import { LoadableImage } from './LoadableImage'
 
 export type RouterParams = {
   name: string
@@ -26,6 +27,7 @@ export class SingleProjectView extends React.Component<Props, State> {
         <Container>
           <Header />
           <Description />
+          <LoadableImage imageUri='https://www.tourisme.fr/images/otf_offices/792/pont-vieux-d-viet.jpg' />
         </Container>
       </PageContent>
     )
