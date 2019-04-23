@@ -37,9 +37,12 @@ const Title = styled.h1`
 
 const Information = styled.h2`
   font-family: ${Variables.titleFont};
-  font-weight: bold;
   font-size: 1.3rem;
   color: ${Variables.Colors.paleSky};
+
+  &:first-of-type {
+    line-height: 2;
+  }
 `
 
 const Separator = styled.hr`
