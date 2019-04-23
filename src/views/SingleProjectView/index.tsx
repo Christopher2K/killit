@@ -28,6 +28,7 @@ export class SingleProjectView extends React.Component<Props, State> {
           <Header />
           <Description />
           <LoadableImage imageUri='https://www.tourisme.fr/images/otf_offices/792/pont-vieux-d-viet.jpg' />
+          <LoadableImage imageUri='https://www.tourisme.fr/images/otf_offices/792/pont-vieux-d-viet.jpg' />
         </Container>
       </PageContent>
     )

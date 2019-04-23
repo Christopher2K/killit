@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 
 import { Flex } from 'components'
 import { boolState } from 'sharedHooks/boolState'
+import { Spaces } from 'styles/variable'
 
 type Props = {
   imageUri: string
@@ -12,8 +13,16 @@ type ImageProps = {
   loaded: boolean
 }
 
+const Root = styled(Flex)`
+  margin-bottom: ${Spaces.large};
+  width: 100%;
+  height: auto;
+`
+
 const ImageComponent = styled.img`
   visibility: ${(props: ImageProps) => props.loaded ? 'visible' : 'hidden'};
+  max-width: 100%;
+  height: auto;
 `
 
 export const LoadableImage: React.FunctionComponent<Props> = ({
@@ -47,7 +56,7 @@ export const LoadableImage: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <Flex
+    <Root
       direction='row'
       justify='center'
       align='center'
@@ -60,6 +69,6 @@ export const LoadableImage: React.FunctionComponent<Props> = ({
       />
       {(imageLoaded && error) && <div>Error</div>}
       {(!imageLoaded && !error) && <div>Loading....</div>}
-    </Flex>
+    </Root>
   )
 }

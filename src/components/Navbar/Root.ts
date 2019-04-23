@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { mobile } from 'styles/responsive'
-// import * as Variables from 'styles/variable'
+import { Colors } from 'styles/variable'
 
 export type Props = {
   currentPath: string
@@ -26,7 +26,15 @@ export const Root = styled.nav`
   align-items: flex-start;
 
   ${mobile} {
+    background-color: ${(props: Props) => getBackgroundColor(props.currentPath)};
     padding: 15px 25px;
     z-index: 1000;
   }
 `
+
+function getBackgroundColor (path: string): string {
+  switch (path) {
+    case '/': return Colors.tuna
+    default: return Colors.catskillWhite
+  }
+}

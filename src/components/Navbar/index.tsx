@@ -25,7 +25,7 @@ const NavbarComponent: React.FunctionComponent<Props> = ({ location }) => {
   }
 
   return (
-    <Root>
+    <Root currentPath={pathname}>
       <Brand
         currentPath={pathname}
         firstRow='Eunice'

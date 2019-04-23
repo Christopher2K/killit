@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 
 import { Flex } from 'components'
 import * as Variables from 'styles/variable'
+import { mobile } from 'styles/responsive'
 
 const Root = styled(
   withProps({
@@ -13,8 +14,11 @@ const Root = styled(
   })(Flex)
 )`
   width: 100%;
-  margin-top: ${Variables.Spaces.small};
   margin-bottom: ${Variables.Spaces.medium};
+
+  ${mobile} {
+    flex-direction: column;
+  }
 `
 
 const Paragraph = styled.p`
@@ -24,12 +28,24 @@ const Paragraph = styled.p`
   color: ${Variables.Colors.shuttleGray};
   line-height: 150%;
 
+
+  ${mobile} {
+    font-size: 1.45rem;
+  }
+
   &:first-of-type {
     margin-right: ${Variables.Spaces.medium};
+    ${mobile} {
+      margin-right: 0;
+      margin-bottom: ${Variables.Spaces.medium};
+    }
   }
 
   &:last-of-type {
     margin-left: ${Variables.Spaces.medium};
+    ${mobile} {
+      margin-left: 0;
+    }
   }
 `
 

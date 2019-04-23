@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 
 import { Flex } from 'components'
 import * as Variables from 'styles/variable'
+import { mobile, desktop, hd } from 'styles/responsive'
 
 const Root = styled(
   withProps({
@@ -14,6 +15,10 @@ const Root = styled(
 )`
   width: 100%;
   margin-bottom: ${Variables.Spaces.tiny};
+
+  ${mobile} {
+    margin-top: ${Variables.Spaces.tiny};
+  }
 `
 
 const InformationsContainer = styled(
@@ -25,6 +30,22 @@ const InformationsContainer = styled(
 )`
   width: 100%;
   margin-bottom: ${Variables.Spaces.small};
+
+  ${mobile} {
+    margin: ${Variables.Spaces.small} 0;
+    flex-direction: column;
+  }
+`
+const SubInformationContainer = styled(
+  withProps({
+    direction: 'column',
+    justify: 'flex-start',
+    align: 'flex-start'
+  })(Flex)
+)`
+  ${mobile} {
+    width: 100%;
+  }
 `
 
 const Title = styled.h1`
@@ -33,6 +54,15 @@ const Title = styled.h1`
   font-size: 5rem;
   color: ${Variables.Colors.paleSky};
   margin-right: ${Variables.Spaces.tiny};
+
+  ${mobile} {
+    width: 100%;
+    font-size: 2rem;
+    margin-right: 0;
+    text-align: left;
+
+    margin-bottom: ${Variables.Spaces.tiny};
+  }
 `
 
 const Information = styled.h2`
@@ -42,6 +72,18 @@ const Information = styled.h2`
 
   &:first-of-type {
     line-height: 2;
+  }
+
+  ${mobile} {
+    display: block;
+    width: 100%;
+    line-height: 1.5;
+    font-size: 1.05rem;
+    text-align: left;
+
+    &:first-of-type {
+      line-height: 1.5;
+    }
   }
 `
 
@@ -54,20 +96,26 @@ const Separator = styled.hr`
   margin: 0;
 `
 
+const MobileSeparator = styled(Separator)`
+  ${desktop} {
+    display: none;
+  }
+  ${hd} {
+    display: none;
+  }
+`
+
 interface Props {}
 
 export const Header: React.FunctionComponent<Props> = () => (
   <Root>
+    <MobileSeparator />
     <InformationsContainer>
       <Title>Nom du projet</Title>
-      <Flex
-        direction='column'
-        justify='flex-start'
-        align='flex-start'
-      >
+      <SubInformationContainer>
         <Information>Catégorie design</Information>
         <Information>2019</Information>
-      </Flex>
+      </SubInformationContainer>
     </InformationsContainer>
     <Separator />
   </Root>
