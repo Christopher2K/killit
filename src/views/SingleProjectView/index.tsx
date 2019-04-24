@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
-import { PageContent, Container } from 'components'
+import { PageContent, Container, ScrollStatus } from 'components'
 
 import { Header } from './Header'
 import { Description } from './Description'
@@ -12,25 +12,30 @@ export type RouterParams = {
 
 export type Props = {} & RouteComponentProps<RouterParams>
 
-export type State = {}
+export const SingleProjectView: React.FunctionComponent<Props> = ({
+  match
+}) => {
+  const containerRef = React.useRef<HTMLDivElement>(null)
 
-export class SingleProjectView extends React.Component<Props, State> {
-  public state: State = {}
+  React.useEffect(() => {
+    console.warn(match.params)
+  }, [match.params.name])
 
-  public componentDidMount () {
-    console.warn(this.props.match.params)
-  }
+  console.warn(containerRef)
 
-  public render (): React.ReactNode {
-    return (
-      <PageContent>
-        <Container>
-          <Header />
-          <Description />
-          <LoadableImage imageUri='https://www.tourisme.fr/images/otf_offices/792/pont-vieux-d-viet.jpg' />
-          <LoadableImage imageUri='https://www.tourisme.fr/images/otf_offices/792/pont-vieux-d-viet.jpg' />
-        </Container>
-      </PageContent>
-    )
-  }
+  return (
+    <PageContent>
+      <Container
+        wrapperRef={containerRef}
+      >
+        <Header />
+        <Description />
+        <LoadableImage imageUri='https://www.tourisme.fr/images/otf_offices/792/pont-vieux-d-viet.jpg' />
+        <LoadableImage imageUri='https://www.tourisme.fr/images/otf_offices/792/pont-vieux-d-viet.jpg' />
+      </Container>
+      <ScrollStatus
+        scrollableElement={containerRef.current}
+      />
+    </PageContent>
+  )
 }

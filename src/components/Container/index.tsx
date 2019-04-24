@@ -36,11 +36,13 @@ const Content = styled.div`
   }
 `
 
-type Props = {}
+type Props = {
+  wrapperRef?: React.RefObject<HTMLDivElement>
+}
 
-export const Container: React.FunctionComponent<Props> = ({ children }) => (
+export const Container: React.FunctionComponent<Props> = ({ children, wrapperRef }) => (
   <Root>
-    <Wrapper>
+    <Wrapper ref={wrapperRef}>
       <Content>
         {children}
       </Content>
