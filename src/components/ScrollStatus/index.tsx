@@ -52,11 +52,11 @@ export const ScrollStatus: React.FunctionComponent<Props> = ({
   }
 
   React.useEffect(() => {
-    if (scrollableElement != null) {
+    if (scrollableElement !== null) {
       scrollableElement.addEventListener('scroll', updateScrollPercentage)
     }
     return function cleanup () {
-      if (scrollableElement != null) {
+      if (scrollableElement !== null) {
         scrollableElement.removeEventListener('scroll', updateScrollPercentage)
       }
     }
@@ -66,7 +66,7 @@ export const ScrollStatus: React.FunctionComponent<Props> = ({
 
   return (
     <>
-     {scrollableElement != null && (
+     {scrollableElement !== null && (
         <Root>
           <Bar percentage={scrollPercentage}/>
         </Root>
