@@ -109,7 +109,7 @@ export const Items: React.FunctionComponent<Props> = ({
     </Item>
     <Item
       onClick={onLinkClick}
-      to='/'>
+      to='/contact'>
       Contact
     </Item>
   </Root>
