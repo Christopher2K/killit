@@ -4,7 +4,9 @@ import styled from '@emotion/styled'
 
 import { Flex } from 'components'
 import * as Variables from 'styles/variable'
-import { mobile, desktop, hd } from 'styles/responsive'
+import { mobile } from 'styles/responsive'
+
+import { Separator, MobileSeparator } from './Separator'
 
 const Root = styled(
   withProps({
@@ -84,24 +86,6 @@ const Information = styled.h2`
     &:first-of-type {
       line-height: 1.5;
     }
-  }
-`
-
-const Separator = styled.hr`
-  width: 100%;
-  border-width: 1px;
-  border-style: solid;
-  border-color: ${Variables.Colors.paleSky};
-  border-top: 0;
-  margin: 0;
-`
-
-const MobileSeparator = styled(Separator)`
-  ${desktop} {
-    display: none;
-  }
-  ${hd} {
-    display: none;
   }
 `
 
