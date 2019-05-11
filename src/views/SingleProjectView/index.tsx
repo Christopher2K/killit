@@ -6,6 +6,7 @@ import withProps from 'recompose/withProps'
 import { PageContent, Container, ScrollStatus, Flex } from 'components'
 import { mobile } from 'styles/responsive'
 import { Spaces } from 'styles/variable'
+import { boolState } from 'sharedHooks/boolState'
 
 import { Header } from './Header'
 import { Description } from './Description'
@@ -43,15 +44,22 @@ export const SingleProjectView: React.FC<Props> = ({
     console.warn(match.params)
   }, [match.params.name])
 
-  console.warn(containerRef)
+  const { bool: descriptionOpen, setBool } = boolState(false)
+
+  function toggleDescription () {
+    setBool(!descriptionOpen)
+  }
 
   return (
     <PageContent>
       <Container
         wrapperRef={containerRef}
       >
-        <Header />
-        <Description />
+        <Header
+          toggleContent={toggleDescription}
+          contentOpen={descriptionOpen}
+        />
+        <Description open={descriptionOpen} />
         <LoadableImage imageUri='https://www.tourisme.fr/images/otf_offices/792/pont-vieux-d-viet.jpg' />
         <LoadableImage imageUri='https://www.tourisme.fr/images/otf_offices/792/pont-vieux-d-viet.jpg' />
         <MobileSeparator />

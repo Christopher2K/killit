@@ -6,6 +6,9 @@ import { Flex } from 'components'
 import * as Variables from 'styles/variable'
 import { mobile } from 'styles/responsive'
 
+type RootProps = {
+  open: boolean
+}
 const Root = styled(
   withProps({
     direction: 'row',
@@ -17,6 +20,7 @@ const Root = styled(
   margin-bottom: ${Variables.Spaces.medium};
 
   ${mobile} {
+    display: ${(props: RootProps) => props.open ? 'flex' : 'none'};
     flex-direction: column;
   }
 `
@@ -49,10 +53,14 @@ const Paragraph = styled.p`
   }
 `
 
-interface Props {}
+type Props = {
+  open: boolean
+}
 
-export const Description: React.FunctionComponent<Props> = () => (
-  <Root>
+export const Description: React.FunctionComponent<Props> = ({
+  open
+}) => (
+  <Root open={open}>
     <Paragraph>
       Réalisation de l’identité visuelle des rencontres internationales de Cerfs-volants de Berck-sur-mer.
       Elle s’appuie sur des expérimentations graphiques autour de la notion du souffle et du vent avec le

@@ -2,6 +2,8 @@ import * as React from 'react'
 import { withProps } from 'recompose'
 import styled from '@emotion/styled'
 
+import expand from 'assets/icons/expand.svg'
+import collapse from 'assets/icons/collapse.svg'
 import { Flex } from 'components'
 import * as Variables from 'styles/variable'
 import { mobile } from 'styles/responsive'
@@ -50,6 +52,21 @@ const SubInformationContainer = styled(
   }
 `
 
+const TitleContainer = styled(
+  withProps({
+    direction: 'row',
+    justify: 'flex-start',
+    align: 'center'
+  })(Flex)
+)`
+  display: inline-flex;
+
+  ${mobile} {
+    width: 100%;
+    margin-bottom: ${Variables.Spaces.tiny};
+  }
+`
+
 const Title = styled.h1`
   font-family: ${Variables.titleFont};
   font-weight: bold;
@@ -58,12 +75,9 @@ const Title = styled.h1`
   margin-right: ${Variables.Spaces.tiny};
 
   ${mobile} {
-    width: 100%;
     font-size: 2rem;
     margin-right: 0;
     text-align: left;
-
-    margin-bottom: ${Variables.Spaces.tiny};
   }
 `
 
@@ -89,13 +103,47 @@ const Information = styled.h2`
   }
 `
 
-interface Props {}
+const ContentToggle = styled.button`
+  display: none;
 
-export const Header: React.FunctionComponent<Props> = () => (
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  border: none;
+
+  flex-shrink: 0;
+  width: 18px;
+  margin-left: ${Variables.Spaces.tiny};
+  cursor: pointer;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  ${mobile} {
+    display: flex;
+  }
+`
+
+interface Props {
+  contentOpen: boolean
+  toggleContent (): void
+}
+
+export const Header: React.FunctionComponent<Props> = ({
+  contentOpen,
+  toggleContent
+}) => (
   <Root>
     <MobileSeparator />
     <InformationsContainer>
-      <Title>Nom du projet</Title>
+      <TitleContainer>
+        <Title>Nom du projet</Title>
+        <ContentToggle onClick={toggleContent}>
+          <img src={contentOpen ? collapse : expand} />
+        </ContentToggle>
+      </TitleContainer>
       <SubInformationContainer>
         <Information>Catégorie design</Information>
         <Information>2019</Information>
