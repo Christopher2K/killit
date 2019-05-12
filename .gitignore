@@ -1,7 +1,8 @@
 .vscode
 .idea
+.firebase
 
 node_modules
-dist/
+public/
 
 yarn-error.log
