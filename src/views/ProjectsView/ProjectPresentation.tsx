@@ -5,6 +5,8 @@ import withProps from 'recompose/withProps'
 import { Flex } from 'components'
 import { titleFont, Colors } from 'styles/variable'
 
+import { ProjectInfo } from './ProjectInfo'
+
 const Root = styled(withProps({
   direction: 'column',
   justify: 'center',
@@ -45,6 +47,15 @@ const ProjectTitle = styled.h1`
   z-index: 5;
 `
 
+const StyledProjectInfo = styled(ProjectInfo)`
+  position: absolute;
+  bottom: 0;
+  left: -20%;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0ms visibility 300ms ease;
+`
+
 const ImageContainer = styled.div`
   position: relative;
   width: 75%;
@@ -52,6 +63,12 @@ const ImageContainer = styled.div`
   cursor: pointer;
 
   &:hover {
+    ${StyledProjectInfo} {
+      opacity: 1;
+      visibility: visible;
+      transition: 300ms opacity ease;
+    }
+
     ${ProjectTitle} {
       z-index: 15;
     }
@@ -77,6 +94,7 @@ export const ProjectPresentation: React.FC<Props> = ({
         <ProjectTitle>
           Giga titre du projet
         </ProjectTitle>
+        <StyledProjectInfo />
       </ImageContainer>
     </Root>
   )
