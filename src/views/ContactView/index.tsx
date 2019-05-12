@@ -1,15 +1,14 @@
-import * as React from 'react'
+import React from 'react'
 
-export type Props = {}
+import { PageContent, Container } from 'components'
 
-export type State = {}
+type Props = {}
 
-export class ContactView extends React.Component<Props, State> {
-  public state: State = {}
-
-  public render (): React.ReactNode {
-    return (
-      null
-    )
-  }
+export const ContactView: React.FC<Props> = () => {
+  return (
+    <PageContent>
+      <Container>
+      </Container>
+    </PageContent>
+  )
 }

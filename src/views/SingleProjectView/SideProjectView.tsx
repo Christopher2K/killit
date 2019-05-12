@@ -5,7 +5,7 @@ import withProps from 'recompose/withProps'
 
 import { Flex } from 'components'
 import { mobile } from 'styles/responsive'
-import { titleFont } from 'styles/variable'
+import { titleFont, Colors } from 'styles/variable'
 import { boolState } from 'sharedHooks/boolState'
 
 import { LoadableImage } from './LoadableImage'
@@ -29,6 +29,8 @@ const Root = styled(Link)`
   align-items: center;
 
   overflow: hidden;
+  text-decoration: none;
+  color: ${Colors.paleSky};
 
   @media screen and (min-width: 1440px) {
     ${(props: RootProps) => props.side}: calc((100% - 1440px) / 2);
@@ -48,6 +50,7 @@ const ProjectTitle = styled.h3`
   font-family: ${titleFont}, sans-serif;
   font-size: 1.5rem;
   font-weight: bold;
+  color: ${Colors.paleSky};
 `
 
 const ImagesContainer = styled(withProps({
