@@ -1,10 +1,13 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-import { Colors } from 'styles/variable'
+import { Colors, scrollStatusHeight } from 'styles/variable'
+
+type ScrollDirection = 'top' | 'left'
 
 type Props = {
   scrollableElement: HTMLElement | null
+  direction: ScrollDirection
 }
 
 const Root = styled.div`
@@ -12,7 +15,7 @@ const Root = styled.div`
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 4px;
+  height: ${scrollStatusHeight};
   z-index: 1000;
   background-color: #C4C4C4;
 `
@@ -29,25 +32,40 @@ const Bar = styled.div`
   width: ${(props: BarProps) => props.percentage}%;
   height: 100%;
 
+  transition: 500ms width ease-out;
+
   background-color: ${Colors.dodgerBlue};
 `
 
 export const ScrollStatus: React.FunctionComponent<Props> = ({
-  scrollableElement
+  scrollableElement,
+  direction
 }) => {
   const [scrollPercentage, setScrollPercentage] = React.useState(0)
 
   function updateScrollPercentage (evt: Event) {
-    const {
-      scrollHeight,
-      scrollTop,
-      offsetHeight
-    }: HTMLElement = evt.target as HTMLElement
-    const remainingScroll = scrollHeight - (scrollTop + offsetHeight)
-    const maxScroll = scrollHeight - offsetHeight
+    let maxScroll: number = 0
+    let remainingScroll: number = 1
+
+    if (direction === 'top') {
+      const {
+        scrollHeight,
+        scrollTop,
+        offsetHeight
+      }: HTMLElement = evt.target as HTMLElement
+      remainingScroll = scrollHeight - (scrollTop + offsetHeight)
+      maxScroll = scrollHeight - offsetHeight
+    } else {
+      const {
+        scrollWidth,
+        scrollLeft,
+        offsetWidth
+      }: HTMLElement = evt.target as HTMLElement
+      remainingScroll = scrollWidth - (scrollLeft + offsetWidth)
+      maxScroll = scrollWidth - offsetWidth
+    }
 
     const percentageScrolled = Math.round(((maxScroll - remainingScroll) / maxScroll) * 100)
-
     setScrollPercentage(percentageScrolled)
   }
 
@@ -61,8 +79,6 @@ export const ScrollStatus: React.FunctionComponent<Props> = ({
       }
     }
   })
-
-  console.warn(scrollableElement)
 
   return (
     <>

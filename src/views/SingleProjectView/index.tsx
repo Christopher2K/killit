@@ -70,7 +70,7 @@ export const SingleProjectView: React.FC<Props> = ({
       </Container>
       <SideProjectView side='left' />
       <SideProjectView side='right' />
-      <ScrollStatus scrollableElement={containerRef.current} />
+      <ScrollStatus scrollableElement={containerRef.current} direction='top' />
     </PageContent>
   )
 }

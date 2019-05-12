@@ -23,3 +23,4 @@ export const titleLineHeight = '1.5'
 export const bodyFont = 'Source Sans Pro'
 
 export const navbarTopGap = '120px'
+export const scrollStatusHeight = '4px'
