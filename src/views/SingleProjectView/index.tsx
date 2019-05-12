@@ -41,7 +41,7 @@ export const SingleProjectView: React.FC<Props> = ({
   const containerRef = React.useRef<HTMLDivElement>(null)
 
   React.useEffect(() => {
-    console.warn(match.params)
+    console.log(match.params)
   }, [match.params.name])
 
   const { bool: descriptionOpen, setBool } = boolState(false)

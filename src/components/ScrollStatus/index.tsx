@@ -2,6 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 
 import { Colors, scrollStatusHeight } from 'styles/variable'
+import { mobile } from 'styles/responsive'
 
 type ScrollDirection = 'top' | 'left'
 
@@ -32,9 +33,12 @@ const Bar = styled.div`
   width: ${(props: BarProps) => props.percentage}%;
   height: 100%;
 
-  transition: 500ms width ease-out;
-
+  transition: 400ms width ease-out;
   background-color: ${Colors.dodgerBlue};
+
+  ${mobile} {
+    transition: none;
+  }
 `
 
 export const ScrollStatus: React.FunctionComponent<Props> = ({

@@ -4,13 +4,18 @@ import withProps from 'recompose/withProps'
 
 import separator from 'assets/icons/separator.svg'
 import { titleFont, Spaces, Colors } from 'styles/variable'
+import { mobile } from 'styles/responsive'
 import { Flex } from 'components'
 
 const Root = styled(withProps({
   direction: 'row',
   justify: 'flex-start',
   align: 'flex-start'
-})(Flex))``
+})(Flex))`
+  ${mobile} {
+    margin-top: 5px;
+  }
+`
 
 const Order = styled.h1`
   font-family: ${titleFont}, sans-serif;
@@ -18,10 +23,18 @@ const Order = styled.h1`
   font-size: 5.1rem;
   font-style: italic;
   color: ${Colors.linkWater};
+
+  ${mobile} {
+    display: none;
+  }
 `
 
 const Separator = styled.img`
   margin: 0 ${Spaces.tiny};
+
+  ${mobile} {
+    display: none;
+  }
 `
 
 const InformationContainer = styled(withProps({
@@ -36,6 +49,12 @@ const Information = styled.p`
   letter-spacing: 4px;
   text-transform: uppercase;
   color: ${Colors.linkWater};
+
+  ${mobile} {
+    color: ${Colors.regentGray};
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+  }
 `
 
 type Props = {

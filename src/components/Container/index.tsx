@@ -1,6 +1,7 @@
 import * as React from 'react'
 import styled from '@emotion/styled'
 
+import { navbarTopGapMobile, Spaces } from 'styles/variable'
 import { mobile } from 'styles/responsive'
 
 const Root = styled.div`
@@ -10,7 +11,7 @@ const Root = styled.div`
   height: 100%;
 
   ${mobile} {
-    padding: 0 40px;
+    padding: 0 ${Spaces.large};
   }
 `
 
@@ -20,7 +21,7 @@ const Wrapper = styled.div`
   height: 100%;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: 40px;
+  padding-bottom: ${Spaces.large};
 `
 
 const Content = styled.div`
@@ -32,7 +33,7 @@ const Content = styled.div`
   margin-top: 120px;
 
   ${mobile} {
-    margin-top: 85px;
+    margin-top: ${navbarTopGapMobile};
   }
 `
 

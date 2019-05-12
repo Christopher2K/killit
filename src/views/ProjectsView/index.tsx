@@ -2,23 +2,39 @@ import React from 'react'
 import styled from '@emotion/styled'
 import withProps from 'recompose/withProps'
 
+import { Spaces, navbarTopGap, navbarTopGapMobile } from 'styles/variable'
+import { mobile, getPixelNumberFromPixelValue, mobileBreakpoint } from 'styles/responsive'
 import { ScrollStatus, Flex } from 'components'
-import { navbarTopGap, scrollStatusHeight } from 'styles/variable'
 import { ProjectPresentation } from './ProjectPresentation'
+
+type ScrollDirection = 'top' | 'left'
+
+export type Props = {}
 
 const Root = styled.div`
   width: 100%;
   height: calc(100% - ${navbarTopGap});
   margin-top: ${navbarTopGap};
+
+  ${mobile} {
+    margin-top: ${navbarTopGapMobile};
+    height: calc(100% - ${navbarTopGapMobile});
+  }
 `
 
 const ScrollableArea = styled.div`
   position: relative;
   width: 100%;
-  height: calc(100% - ${scrollStatusHeight});
+  height: 100%;
 
   overflow-x: scroll;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
+
+  ${mobile} {
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
 `
 
 const Content = styled(withProps({
@@ -33,20 +49,49 @@ const Content = styled(withProps({
   flex-wrap: no-wrap;
   height: 100%;
   padding: 0 10vw;
-`
 
-export type Props = {}
+  ${mobile} {
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    padding: 0 ${Spaces.large};
+  }
+`
 
 export const ProjectsView: React.FC<Props> = () => {
   const containerRef = React.useRef<HTMLDivElement>(null)
+  const [scrollDirection, setScrollDirection] = React.useState<ScrollDirection>(() => {
+    if (window.innerWidth > getPixelNumberFromPixelValue(mobileBreakpoint)) {
+      return 'left'
+    }
+    return 'top'
+  })
 
   function scrollWithWheel (event: React.WheelEvent<HTMLDivElement>) {
-    event.preventDefault()
-    const target: HTMLDivElement = event.currentTarget as HTMLDivElement
-
-    target.scrollLeft = target.scrollLeft + event.deltaY
+    if (window.innerWidth > getPixelNumberFromPixelValue(mobileBreakpoint)) {
+      event.preventDefault()
+      const target: HTMLDivElement = event.currentTarget as HTMLDivElement
+      target.scrollLeft = target.scrollLeft + event.deltaY
+    }
   }
 
+  function handleResizing () {
+    if (window.innerWidth > getPixelNumberFromPixelValue(mobileBreakpoint) && scrollDirection === 'top') {
+      setScrollDirection('left')
+    } else if (window.innerWidth <= getPixelNumberFromPixelValue(mobileBreakpoint) && scrollDirection === 'left') {
+      setScrollDirection('top')
+    }
+  }
+
+  React.useEffect(() => {
+    window.addEventListener('resize', handleResizing)
+
+    return function cleanup () {
+      window.removeEventListener('resize', handleResizing)
+    }
+  })
+
+  console.warn(containerRef)
   return (
     <Root>
       <ScrollableArea
@@ -58,7 +103,7 @@ export const ProjectsView: React.FC<Props> = () => {
           <ProjectPresentation imgSrc='https://www.tuxboard.com/photos/2016/10/image-arriere-plan-smartphone-golden-gate.jpg' />
         </Content>
       </ScrollableArea>
-      <ScrollStatus scrollableElement={containerRef.current} direction='left' />
+      <ScrollStatus scrollableElement={containerRef.current} direction={scrollDirection} />
     </Root>
   )
 }

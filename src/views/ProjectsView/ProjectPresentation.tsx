@@ -1,9 +1,11 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import withProps from 'recompose/withProps'
+import { Link } from 'react-router-dom'
 
 import { Flex } from 'components'
-import { titleFont, Colors } from 'styles/variable'
+import { titleFont, Colors, Spaces } from 'styles/variable'
+import { mobile } from 'styles/responsive'
 
 import { ProjectInfo } from './ProjectInfo'
 
@@ -16,6 +18,12 @@ const Root = styled(withProps({
   width: 70vw;
   height: 100%;
   flex-shrink: 0;
+
+  ${mobile} {
+    width: 100%;
+    height: auto;
+    margin-bottom: ${Spaces.small};
+  }
 `
 
 const ProjectImage = styled.img`
@@ -31,6 +39,13 @@ const ProjectImage = styled.img`
   transform: translateY(-50%);
   filter: blur(0);
   transition: 300ms filter ease, 300ms opacity ease;
+
+  ${mobile} {
+    position: relative;
+    top: initial;
+    right: initial;
+    transform: none;
+  }
 `
 
 const ProjectTitle = styled.h1`
@@ -45,6 +60,16 @@ const ProjectTitle = styled.h1`
   opacity: 0.8;
   text-shadow: -1px 0 ${Colors.regentGray}, 0 1px ${Colors.regentGray}, 1px 0 ${Colors.regentGray}, 0 -1px ${Colors.regentGray};
   z-index: 5;
+
+  ${mobile} {
+    position: relative;
+    top: 0;
+    left: 0;
+    font-size: 1.4rem;
+    text-shadow: none;
+    color: ${Colors.linkWater};
+    margin-top: 5px;
+  }
 `
 
 const StyledProjectInfo = styled(ProjectInfo)`
@@ -54,13 +79,23 @@ const StyledProjectInfo = styled(ProjectInfo)`
   visibility: hidden;
   opacity: 0;
   transition: 0ms visibility 300ms ease;
+
+  ${mobile} {
+    position: relative;
+    bottom: initial;
+    left: initial;
+    visibility: visible;
+    opacity: 1;
+  }
 `
 
-const ImageContainer = styled.div`
+const ImageContainer = styled(Link)`
+  display: block;
   position: relative;
   width: 75%;
   height: 95%;
   cursor: pointer;
+  text-decoration: none;
 
   &:hover {
     ${StyledProjectInfo} {
@@ -78,6 +113,29 @@ const ImageContainer = styled.div`
       filter: blur(4px);
     }
   }
+
+  ${mobile} {
+    position: relative;
+    height: auto;
+    width: 100%;
+    height: auto;
+
+    &:hover {
+      ${StyledProjectInfo} {
+        opacity: initial;
+        transition: initial;
+      }
+
+      ${ProjectTitle} {
+        z-index: initial;
+      }
+
+      ${ProjectImage} {
+        opacity: initial;
+        filter: initial;
+      }
+    }
+  }
 `
 
 type Props = {
@@ -89,7 +147,7 @@ export const ProjectPresentation: React.FC<Props> = ({
 }) => {
   return (
     <Root>
-      <ImageContainer>
+      <ImageContainer to='/projet/test'>
         <ProjectImage src={imgSrc} />
         <ProjectTitle>
           Giga titre du projet
