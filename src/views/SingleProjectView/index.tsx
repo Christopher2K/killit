@@ -38,7 +38,7 @@ export type Props = {} & RouteComponentProps<RouterParams>
 export const SingleProjectView: React.FC<Props> = ({
   match
 }) => {
-  const containerRef = React.useRef<HTMLDivElement>(null)
+  const [container, setContainer] = React.useState<HTMLDivElement | null>(null)
 
   React.useEffect(() => {
     console.log(match.params)
@@ -53,7 +53,7 @@ export const SingleProjectView: React.FC<Props> = ({
   return (
     <PageContent>
       <Container
-        wrapperRef={containerRef}
+        wrapperRef={el => setContainer(el)}
       >
         <Header
           toggleContent={toggleDescription}
@@ -70,7 +70,7 @@ export const SingleProjectView: React.FC<Props> = ({
       </Container>
       <SideProjectView side='left' />
       <SideProjectView side='right' />
-      <ScrollStatus scrollableElement={containerRef.current} direction='top' />
+      <ScrollStatus scrollableElement={container} direction='top' />
     </PageContent>
   )
 }

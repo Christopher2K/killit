@@ -38,7 +38,7 @@ const Content = styled.div`
 `
 
 type Props = {
-  wrapperRef?: React.RefObject<HTMLDivElement>
+  wrapperRef?: React.LegacyRef<HTMLDivElement>
 }
 
 export const Container: React.FunctionComponent<Props> = ({ children, wrapperRef }) => (

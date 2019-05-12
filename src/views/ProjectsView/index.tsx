@@ -59,7 +59,7 @@ const Content = styled(withProps({
 `
 
 export const ProjectsView: React.FC<Props> = () => {
-  const containerRef = React.useRef<HTMLDivElement>(null)
+  const [container, setContainer] = React.useState<HTMLDivElement | null>(null)
   const [scrollDirection, setScrollDirection] = React.useState<ScrollDirection>(() => {
     if (window.innerWidth > getPixelNumberFromPixelValue(mobileBreakpoint)) {
       return 'left'
@@ -91,11 +91,10 @@ export const ProjectsView: React.FC<Props> = () => {
     }
   })
 
-  console.warn(containerRef)
   return (
     <Root>
       <ScrollableArea
-        ref={containerRef}
+        ref={el => setContainer(el)}
         onWheel={scrollWithWheel}
       >
         <Content>
@@ -103,7 +102,7 @@ export const ProjectsView: React.FC<Props> = () => {
           <ProjectPresentation imgSrc='https://www.tuxboard.com/photos/2016/10/image-arriere-plan-smartphone-golden-gate.jpg' />
         </Content>
       </ScrollableArea>
-      <ScrollStatus scrollableElement={containerRef.current} direction={scrollDirection} />
+      <ScrollStatus scrollableElement={container} direction={scrollDirection} />
     </Root>
   )
 }
