@@ -38,6 +38,6 @@ export function fromDocumentToProject (rawData: any): Project {
     mainImage: data.image_principale.url,
     images: data.images.map((img: any) => img.image.url),
     miniatures: data.miniatures.map((img: any) => img.miniature.url),
-    embededVideos: []
+    embededVideos: data.videos_links.map((video: any) => video.video_link.url)
   }
 }

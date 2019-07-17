@@ -5,6 +5,7 @@ import styled from '@emotion/styled'
 import expand from 'assets/icons/expand.svg'
 import collapse from 'assets/icons/collapse.svg'
 import { Flex } from 'components'
+import { Project } from 'models'
 import * as Variables from 'styles/variable'
 import { mobile } from 'styles/responsive'
 
@@ -127,28 +128,30 @@ const ContentToggle = styled.button`
 `
 
 interface Props {
+  project: Project
   contentOpen: boolean
   toggleContent (): void
 }
 
-export const Header: React.FunctionComponent<Props> = ({
-  contentOpen,
-  toggleContent
-}) => (
-  <Root>
-    <MobileSeparator />
-    <InformationsContainer>
-      <TitleContainer>
-        <Title>Nom du projet</Title>
-        <ContentToggle onClick={toggleContent}>
-          <img src={contentOpen ? collapse : expand} />
-        </ContentToggle>
-      </TitleContainer>
-      <SubInformationContainer>
-        <Information>Catégorie design</Information>
-        <Information>2019</Information>
-      </SubInformationContainer>
-    </InformationsContainer>
-    <Separator />
-  </Root>
-)
+export const Header: React.FunctionComponent<Props> = props => {
+  const { contentOpen, project, toggleContent } = props
+  return (
+    <Root>
+      <MobileSeparator />
+      <InformationsContainer>
+        <TitleContainer>
+          <Title>{project.title}</Title>
+          <ContentToggle onClick={toggleContent}>
+            <img src={contentOpen ? collapse : expand} />
+          </ContentToggle>
+        </TitleContainer>
+        <SubInformationContainer>
+          <Information>{project.type}</Information>
+          <Information>{project.year}</Information>
+        </SubInformationContainer>
+      </InformationsContainer>
+      <Separator />
+    </Root>
+  )
+
+}

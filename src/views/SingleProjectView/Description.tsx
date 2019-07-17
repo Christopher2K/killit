@@ -55,24 +55,16 @@ const Paragraph = styled.p`
 
 type Props = {
   open: boolean
+  fr: string
+  en: string
 }
 
-export const Description: React.FunctionComponent<Props> = ({
-  open
-}) => (
-  <Root open={open}>
-    <Paragraph>
-      Réalisation de l’identité visuelle des rencontres internationales de Cerfs-volants de Berck-sur-mer.
-      Elle s’appuie sur des expérimentations graphiques autour de la notion du souffle et du vent avec le
-      logiciel processing. Le sketch récupère des données météorologiques en temps réel, concernant
-      le vent et la température d’une ville. Une fois les données récupérées, l’animation se déclenche
-      les serpentins se mettent en mouvement à la manière des manches à air.
-    </Paragraph>
-    <Paragraph>
-      Realization of the visual identity of international meetings of Kites of Berck-sur-mer.
-      It is based on graphic experiments around the notion of breath and the treatment with the software.
-      The skit recovers the data on real time, on the time. Once the data was recovered, the animation was
-      triggered, the streamers turned into sleeve movements.
-    </Paragraph>
-  </Root>
-)
+export const Description: React.FunctionComponent<Props> = props => {
+  const { open, fr, en } = props
+  return (
+    <Root open={open}>
+      <Paragraph dangerouslySetInnerHTML={{ __html: fr }}/>
+      <Paragraph dangerouslySetInnerHTML={{ __html: en }}/>
+    </Root>
+  )
+}
