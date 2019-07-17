@@ -1,15 +1,22 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import withProps from 'recompose/withProps'
+import { Option, none, some } from 'fp-ts/lib/Option'
+import ResolvedApi from 'prismic-javascript/d.ts/ResolvedApi'
+import { Predicates } from 'prismic-javascript'
 
 import { Spaces, navbarTopGap, navbarTopGapMobile } from 'styles/variable'
 import { mobile, getPixelNumberFromPixelValue, mobileBreakpoint } from 'styles/responsive'
 import { ScrollStatus, Flex } from 'components'
+import { withPrismicApi } from 'utils/prismic'
+import { fromDocumentToProject, Project } from 'models/project'
 import { ProjectPresentation } from './ProjectPresentation'
 
 type ScrollDirection = 'top' | 'left'
 
-export type Props = {}
+type Props = {
+  maybePrismic: Option<ResolvedApi>
+}
 
 const Root = styled.div`
   width: 100%;
@@ -58,8 +65,10 @@ const Content = styled(withProps({
   }
 `
 
-export const ProjectsView: React.FC<Props> = () => {
+export const Component: React.FC<Props> = props => {
+  const { maybePrismic } = props
   const [container, setContainer] = React.useState<HTMLDivElement | null>(null)
+  const [maybeProjects, setProjects] = React.useState<Option<Project[]>>(none)
   const [scrollDirection, setScrollDirection] = React.useState<ScrollDirection>(() => {
     if (window.innerWidth > getPixelNumberFromPixelValue(mobileBreakpoint)) {
       return 'left'
@@ -85,11 +94,24 @@ export const ProjectsView: React.FC<Props> = () => {
 
   React.useEffect(() => {
     window.addEventListener('resize', handleResizing)
-
     return function cleanup () {
       window.removeEventListener('resize', handleResizing)
     }
   })
+
+  React.useEffect(() => {
+    maybePrismic.map(prismic => {
+      if (maybeProjects.isNone()) {
+        prismic.query(
+          Predicates.at('document.type', 'project'),
+          {}
+        ).then(response => {
+          setProjects(some(response.results.map(fromDocumentToProject)))
+        })
+        .catch(console.error)
+      }
+    })
+  }, [maybePrismic])
 
   return (
     <Root>
@@ -98,11 +120,18 @@ export const ProjectsView: React.FC<Props> = () => {
         onWheel={scrollWithWheel}
       >
         <Content>
-          <ProjectPresentation imgSrc='https://www.tourisme.fr/images/otf_offices/792/pont-vieux-d-viet.jpg' />
-          <ProjectPresentation imgSrc='https://www.tuxboard.com/photos/2016/10/image-arriere-plan-smartphone-golden-gate.jpg' />
+          {
+            maybeProjects
+              .map(projects => projects.map(
+                project => <ProjectPresentation key={project.uid} project={project} />
+              ))
+              .getOrElse([<div>Chargement</div>])
+          }
         </Content>
       </ScrollableArea>
       <ScrollStatus scrollableElement={container} direction={scrollDirection} />
     </Root>
   )
 }
+
+export const ProjectsView = withPrismicApi(Component)

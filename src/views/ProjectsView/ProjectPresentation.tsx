@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { Flex } from 'components'
 import { titleFont, Colors, Spaces } from 'styles/variable'
 import { mobile } from 'styles/responsive'
+import { Project } from 'models'
 
 import { ProjectInfo } from './ProjectInfo'
 
@@ -139,20 +140,20 @@ const ImageContainer = styled(Link)`
 `
 
 type Props = {
-  imgSrc: string
+  project: Project
 }
 
 export const ProjectPresentation: React.FC<Props> = ({
-  imgSrc
+  project
 }) => {
   return (
     <Root>
-      <ImageContainer to='/projet/test'>
-        <ProjectImage src={imgSrc} />
+      <ImageContainer to={`/projet/${project.uid}`}>
+        <ProjectImage src={project.mainImage} />
         <ProjectTitle>
-          Giga titre du projet
+          {project.title}
         </ProjectTitle>
-        <StyledProjectInfo />
+        <StyledProjectInfo project={project} />
       </ImageContainer>
     </Root>
   )

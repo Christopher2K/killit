@@ -6,6 +6,7 @@ import separator from 'assets/icons/separator.svg'
 import { titleFont, Spaces, Colors } from 'styles/variable'
 import { mobile } from 'styles/responsive'
 import { Flex } from 'components'
+import { Project } from 'models'
 
 const Root = styled(withProps({
   direction: 'row',
@@ -59,16 +60,22 @@ const Information = styled.p`
 
 type Props = {
   className?: string
+  project: Project
 }
 
-export const ProjectInfo: React.FC<Props> = ({ className }) => {
+export const ProjectInfo: React.FC<Props> = props => {
+  const {
+    className,
+    project
+  } = props
+
   return (
     <Root className={className}>
       <Order>01</Order>
       <Separator src={separator} />
       <InformationContainer>
-        <Information>Identité visuelle</Information>
-        <Information>2018</Information>
+        <Information>{project.type}</Information>
+        <Information>{project.year}</Information>
       </InformationContainer>
     </Root>
   )

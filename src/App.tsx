@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Global } from '@emotion/core'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { Option, none, some } from 'fp-ts/lib/Option'
 import Prismic from 'prismic-javascript'
 import ResolvedApi from 'prismic-javascript/d.ts/ResolvedApi'
 
@@ -13,17 +14,17 @@ import * as Views from 'views'
 export type Props = {}
 
 export type State = {
-  prismicApi: ResolvedApi | null
+  maybePrismic: Option<ResolvedApi>
 }
 
 export class App extends React.Component<Props, State> {
   public state: State = {
-    prismicApi: null
+    maybePrismic: none
   }
 
   public componentDidMount () {
     Prismic.api(PRISMIC_ENDPOINT)
-      .then(prismicApi => this.setState({ prismicApi }))
+      .then(prismic => this.setState({ maybePrismic: some(prismic) }))
       .catch(console.error) // TODO: Chris handle error here
   }
 
@@ -33,7 +34,7 @@ export class App extends React.Component<Props, State> {
         <Global styles={global} />
         <BrowserRouter>
           <Switch>
-            <APIContext.Provider value={this.state.prismicApi}>
+            <APIContext.Provider value={this.state.maybePrismic}>
               <Root>
                 <Navbar />
                 <Route exact path='/' component={Views.ProjectsView} />
