@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from '@emotion/styled'
+import { css } from '@emotion/core'
 import withProps from 'recompose/withProps'
 import { Link } from 'react-router-dom'
+import { none, some, Option } from 'fp-ts/lib/Option'
 
 import { Flex } from 'components'
 import { titleFont, Colors, Spaces } from 'styles/variable'
@@ -10,19 +12,26 @@ import { Project } from 'models'
 
 import { ProjectInfo } from './ProjectInfo'
 
+enum ImageKind {
+  horizontal = 'horizontal',
+  vertical = 'vertical'
+}
+
 const Root = styled(withProps({
   direction: 'column',
   justify: 'center',
   align: 'flex-end'
 })(Flex))`
   position: relative;
-  width: 70vw;
+  width: 65vw;
   height: 100%;
   flex-shrink: 0;
+  margin-right: 10vw;
 
   ${mobile} {
     width: 100%;
     height: auto;
+    margin-right: 0;
     margin-bottom: ${Spaces.small};
   }
 `
@@ -32,7 +41,7 @@ const ProjectImage = styled.img`
   right: 0;
   top: 50%;
   max-width: 100%;
-  max-height: 100%;
+  max-height: 70%;
   height: auto;
   width: auto;
   z-index: 10;
@@ -49,18 +58,26 @@ const ProjectImage = styled.img`
   }
 `
 
+type ProjectTitleProps = {
+  imageKind: ImageKind
+}
+
 const ProjectTitle = styled.h1`
   position: absolute;
-  top: 60%;
-  left: -20%;
-  max-width: 100%;
+  max-width: 600px;
   font-family: ${titleFont}, sans-serif;
   font-size: 8rem;
   font-weight: bold;
-  color: ${Colors.tuna};
-  opacity: 0.8;
-  text-shadow: -1px 0 ${Colors.regentGray}, 0 1px ${Colors.regentGray}, 1px 0 ${Colors.regentGray}, 0 -1px ${Colors.regentGray};
+  color: ${Colors.black};
   z-index: 5;
+
+  ${(props: ProjectTitleProps) => props.imageKind === ImageKind.horizontal ? css`
+    top: 0%;
+    left: -20%;
+  ` : css`
+    top: 5%;
+    left: 20%;
+  `}
 
   ${mobile} {
     position: relative;
@@ -146,13 +163,25 @@ type Props = {
 export const ProjectPresentation: React.FC<Props> = ({
   project
 }) => {
+  const [mbImageKind, setImageKind] = React.useState<Option<ImageKind>>(none)
+
+  function findOutImageKind (evt: React.SyntheticEvent<HTMLImageElement, Event>) {
+    const element: HTMLImageElement = evt.target as HTMLImageElement
+    const { width, height } = element.getBoundingClientRect()
+    const imageKind = width >= height ? some(ImageKind.horizontal) : some(ImageKind.vertical)
+    setImageKind(imageKind)
+  }
+
   return (
     <Root>
       <ImageContainer to={`/projet/${project.uid}`}>
-        <ProjectImage src={project.mainImage} />
-        <ProjectTitle>
-          {project.title}
-        </ProjectTitle>
+        <ProjectImage
+          src={project.mainImage}
+          onLoad={findOutImageKind}
+        />
+        {mbImageKind.map(
+          imageKind => <ProjectTitle imageKind={imageKind}>{project.title}</ProjectTitle>
+        ).toNullable()}
         <StyledProjectInfo project={project} />
       </ImageContainer>
     </Root>

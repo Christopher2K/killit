@@ -7,6 +7,7 @@ export const Colors = {
   trout: '#505866',
   tuna: '#2F343D',
   white: '#FFFFFF',
+  black: '#16181C',
   catskillWhite: '#E3E9F2'
 }
 
