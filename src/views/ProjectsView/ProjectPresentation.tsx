@@ -62,7 +62,7 @@ type ProjectTitleProps = {
   imageKind: ImageKind
 }
 
-const ProjectTitle = styled.h1`
+const ProjectTitle = styled.h1<ProjectTitleProps>`
   position: absolute;
   max-width: 600px;
   font-family: ${titleFont}, sans-serif;
@@ -71,7 +71,7 @@ const ProjectTitle = styled.h1`
   color: ${Colors.black};
   z-index: 5;
 
-  ${(props: ProjectTitleProps) => props.imageKind === ImageKind.horizontal ? css`
+  ${props => props.imageKind === ImageKind.horizontal ? css`
     top: 0%;
     left: -20%;
   ` : css`

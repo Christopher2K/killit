@@ -4,7 +4,7 @@ type Props = {
   background?: string
 }
 
-export const PageContent = styled.div`
+export const PageContent = styled.div<Props>`
   flex-grow: 1;
 
   display: flex;
@@ -14,5 +14,5 @@ export const PageContent = styled.div`
 
   width: 100%;
   height: 100%;
-  background-color: ${(props: Props) => props.background || 'transparent'};
+  background-color: ${props => props.background || 'transparent'};
 `

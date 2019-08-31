@@ -6,7 +6,7 @@ export type Props = {
   currentPath: string
 }
 
-export const Root = styled.nav`
+export const Root = styled.nav<Props>`
   position: fixed;
   left: 0;
   right: 0;
@@ -27,7 +27,7 @@ export const Root = styled.nav`
   z-index: 1000;
 
   ${mobile} {
-    background-color: ${(props: Props) => getBackgroundColor(props.currentPath)};
+    background-color: ${props => getBackgroundColor(props.currentPath)};
     padding: 15px 25px;
     z-index: 1000;
   }

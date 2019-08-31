@@ -4,8 +4,8 @@ type Props = {
   backgroundColor: string
 }
 
-export const Background = styled.div`
-  background-color: ${(props: Props) => props.backgroundColor};
+export const Background = styled.div<Props>`
+  background-color: ${props => props.backgroundColor};
 
   width: 100%;
   height: 100%;

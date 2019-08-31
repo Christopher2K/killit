@@ -15,12 +15,12 @@ const Root = styled(
     justify: 'flex-start',
     align: 'flex-start'
   })(Flex)
-)`
+)<RootProps>`
   width: 100%;
   margin-bottom: ${Variables.Spaces.medium};
 
   ${mobile} {
-    display: ${(props: RootProps) => props.open ? 'flex' : 'none'};
+    display: ${props => props.open ? 'flex' : 'none'};
     flex-direction: column;
   }
 `

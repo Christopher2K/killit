@@ -15,10 +15,10 @@ type Side = 'left' | 'right'
 type RootProps = {
   side: Side
 }
-const Root = styled(Link)`
+const Root = styled(Link)<RootProps>`
   position: fixed;
   top: 0;
-  ${(props: RootProps) => props.side}: 0;
+  ${props => props.side}: 0;
   width: 200px;
   height: 100%;
   min-height: 600px;
@@ -44,9 +44,10 @@ const Root = styled(Link)`
 type ProjectTitleProps = {
   side: Side
 }
-const ProjectTitle = styled.h3`
-  transform: rotate(${(props: ProjectTitleProps) => props.side === 'left' ? '-90deg' : '270deg'});
-  align-self: ${(props: RootProps) => props.side === 'left' ? 'flex-start' : 'flex-end'};
+
+const ProjectTitle = styled.h3<ProjectTitleProps>`
+  transform: rotate(${props => props.side === 'left' ? '-90deg' : '270deg'});
+  align-self: ${props => props.side === 'left' ? 'flex-start' : 'flex-end'};
   font-family: ${titleFont}, sans-serif;
   font-size: 1.5rem;
   font-weight: bold;

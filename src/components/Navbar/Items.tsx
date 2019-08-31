@@ -13,15 +13,15 @@ type RootProps = {
   currentPath: string
 }
 
-const Root = styled(Flex)`
+const Root = styled(Flex)<RootProps>`
   width: 235px;
 
   a {
-    color: ${(props: RootProps) => getLinkColor(props.currentPath)};
+    color: ${props => getLinkColor(props.currentPath)};
   }
 
   ${mobile} {
-    display: ${(props: RootProps) => props.open ? 'flex' : 'none'};
+    display: ${props => props.open ? 'flex' : 'none'};
     position: fixed;
     top: 0;
     left: 0;

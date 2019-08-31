@@ -19,8 +19,8 @@ const Root = styled(Flex)`
   height: auto;
 `
 
-const ImageComponent = styled.img`
-  visibility: ${(props: ImageProps) => props.loaded ? 'visible' : 'hidden'};
+const ImageComponent = styled.img<ImageProps>`
+  visibility: ${props => props.loaded ? 'visible' : 'hidden'};
   max-width: 100%;
   height: auto;
 `

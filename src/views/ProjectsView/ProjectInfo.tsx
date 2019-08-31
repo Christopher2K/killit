@@ -8,11 +8,7 @@ import { mobile } from 'styles/responsive'
 import { Flex } from 'components'
 import { Project } from 'models'
 
-const Root = styled(withProps({
-  direction: 'row',
-  justify: 'flex-start',
-  align: 'flex-start'
-})(Flex))`
+const Root = styled(Flex)`
   ${mobile} {
     margin-top: 5px;
   }
@@ -70,7 +66,12 @@ export const ProjectInfo: React.FC<Props> = props => {
   } = props
 
   return (
-    <Root className={className}>
+    <Root
+      className={className}
+      direction='row'
+      justify='flex-start'
+      align='flex-start'
+    >
       <Order>01</Order>
       <Separator src={separator} />
       <InformationContainer>

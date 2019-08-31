@@ -25,12 +25,12 @@ type BarProps = {
   percentage: number
 }
 
-const Bar = styled.div`
+const Bar = styled.div<BarProps>`
   position: absolute;
   top: 0;
   left: 0;
 
-  width: ${(props: BarProps) => props.percentage}%;
+  width: ${props => props.percentage}%;
   height: 100%;
 
   transition: 400ms width ease-out;

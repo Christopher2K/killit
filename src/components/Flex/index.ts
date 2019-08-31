@@ -8,9 +8,9 @@ type Props = {
   align: FlexProperty
 }
 
-export const Flex = styled.div`
+export const Flex = styled.div<Props>`
   display: flex;
-  flex-direction: ${(props: Props) => props.direction};
+  flex-direction: ${props => props.direction};
   justify-content: ${props => props.justify};
   align-items: ${props => props.align};
 `

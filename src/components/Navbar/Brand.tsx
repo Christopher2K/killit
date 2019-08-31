@@ -10,9 +10,9 @@ type RootProps = {
   currentPath: string
 }
 
-const Root = styled(Flex)`
+const Root = styled(Flex)<RootProps>`
   width: 235px;
-  color: ${(props: RootProps) => getBackgroundColor(props.currentPath)};
+  color: ${props => getBackgroundColor(props.currentPath)};
 
   ${mobile} {
     width: 140px;
@@ -23,11 +23,11 @@ type TitleProps = {
   withLeftOffset?: boolean
 }
 
-const Title = styled.h1`
+const Title = styled.h1<TitleProps>`
   ${titleFontStyle}
   font-size: 4rem;
   color: inherit;
-  margin-left: ${(props: TitleProps) => props.withLeftOffset ? Variables.Spaces.small : 0};
+  margin-left: ${props => props.withLeftOffset ? Variables.Spaces.small : 0};
 
   ${mobile} {
     font-size: 2.2rem;
