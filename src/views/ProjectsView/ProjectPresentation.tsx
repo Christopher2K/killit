@@ -8,7 +8,7 @@ import { none, some, Option } from 'fp-ts/lib/Option'
 import { Flex } from 'components'
 import { titleFont, Colors, Spaces } from 'styles/variable'
 import { mobile } from 'styles/responsive'
-import { Project } from 'models'
+import { Project, MainImageAlignment } from 'models'
 
 import { ProjectInfo } from './ProjectInfo'
 
@@ -23,10 +23,10 @@ const Root = styled(withProps({
   align: 'flex-end'
 })(Flex))`
   position: relative;
-  width: 65vw;
+  width: auto;
   height: 100%;
   flex-shrink: 0;
-  margin-right: 10vw;
+  margin-right: 20vw;
 
   ${mobile} {
     width: 100%;
@@ -36,17 +36,18 @@ const Root = styled(withProps({
   }
 `
 
-const ProjectImage = styled.img`
-  position: absolute;
-  right: 0;
-  top: 50%;
-  max-width: 100%;
-  max-height: 70%;
-  height: auto;
+type ProjectImageProps = {
+  mbImageKind: Option<ImageKind>
+}
+
+const ProjectImage = styled.img<ProjectImageProps>`
+  position: relative;
+  height: 100%;
   width: auto;
+  right: 0;
   z-index: 10;
 
-  transform: translateY(-50%);
+  visibility: ${props => props.mbImageKind.isSome() ? 'visible' : 'hidden'};
   filter: blur(0);
   transition: 300ms filter ease, 300ms opacity ease;
 
@@ -64,20 +65,16 @@ type ProjectTitleProps = {
 
 const ProjectTitle = styled.h1<ProjectTitleProps>`
   position: absolute;
-  max-width: 600px;
+  top: 50%;
+  left: 50%;
+  width: 95%;
+  transform: translate(-50%, -50%);
   font-family: ${titleFont}, sans-serif;
-  font-size: 8rem;
+  text-align: center;
+  font-size: 6rem;
   font-weight: bold;
-  color: ${Colors.black};
+  color: ${Colors.linkWater};
   z-index: 5;
-
-  ${props => props.imageKind === ImageKind.horizontal ? css`
-    top: 0%;
-    left: -20%;
-  ` : css`
-    top: 5%;
-    left: 20%;
-  `}
 
   ${mobile} {
     position: relative;
@@ -108,12 +105,16 @@ const StyledProjectInfo = styled(ProjectInfo)`
 `
 
 const ImageContainer = styled(Link)`
-  display: block;
+  display: flex;
+  flex-direction: row;
   position: relative;
-  width: 75%;
-  height: 95%;
+  height: 80%;
   cursor: pointer;
   text-decoration: none;
+
+  ${ProjectTitle} {
+    visibility: hidden;
+  }
 
   &:hover {
     ${StyledProjectInfo} {
@@ -123,6 +124,7 @@ const ImageContainer = styled(Link)`
     }
 
     ${ProjectTitle} {
+      visibility: visible;
       z-index: 15;
     }
 
@@ -137,6 +139,10 @@ const ImageContainer = styled(Link)`
     height: auto;
     width: 100%;
     height: auto;
+
+    ${ProjectTitle} {
+      visibility: visible;
+    }
 
     &:hover {
       ${StyledProjectInfo} {
@@ -154,6 +160,39 @@ const ImageContainer = styled(Link)`
       }
     }
   }
+`
+
+type OverlayProps = {
+  alignment: MainImageAlignment
+  mbImageKind: Option<ImageKind>
+}
+const Overlay = styled.div<OverlayProps>`
+  position: relative;
+  background-color: transparent;
+  height: 100%;
+  ${props => props.mbImageKind.map(
+    imageKind => imageKind === 'horizontal' ? css`
+      max-height: 80%;
+    ` : css`
+      max-height: 100%;
+    `
+  ).getOrElse(css``)}
+  ${props => {
+    switch (props.alignment) {
+      case 'top':
+        return css`
+          align-self: flex-start;
+        `
+      case 'bottom':
+        return css`
+          align-self: flex-end;
+        `
+      default:
+        return css`
+          align-self: center;
+        `
+    }
+  }}
 `
 
 type Props = {
@@ -175,13 +214,16 @@ export const ProjectPresentation: React.FC<Props> = ({
   return (
     <Root>
       <ImageContainer to={`/projet/${project.uid}`}>
-        <ProjectImage
-          src={project.mainImage}
-          onLoad={findOutImageKind}
-        />
-        {mbImageKind.map(
-          imageKind => <ProjectTitle imageKind={imageKind}>{project.title}</ProjectTitle>
-        ).toNullable()}
+        <Overlay alignment={project.mainImage.alignment} mbImageKind={mbImageKind}>
+          <ProjectImage
+            src={project.mainImage.url}
+            onLoad={findOutImageKind}
+            mbImageKind={mbImageKind}
+          />
+          {mbImageKind.map(imageKind =>
+            <ProjectTitle imageKind={imageKind}>{project.title}</ProjectTitle>
+          ).toNullable()}
+        </Overlay>
         <StyledProjectInfo project={project} />
       </ImageContainer>
     </Root>

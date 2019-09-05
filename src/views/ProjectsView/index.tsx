@@ -9,7 +9,7 @@ import { Spaces, navbarTopGap, navbarTopGapMobile } from 'styles/variable'
 import { mobile, getPixelNumberFromPixelValue, mobileBreakpoint } from 'styles/responsive'
 import { ScrollStatus, Flex } from 'components'
 import { withPrismicApi } from 'utils/prismic'
-import { fromDocumentToProject, Project } from 'models/project'
+import { fromDocumentToProject, byClassment, Project } from 'models/project'
 import { ProjectPresentation } from './ProjectPresentation'
 
 type ScrollDirection = 'top' | 'left'
@@ -106,7 +106,7 @@ export const Component: React.FC<Props> = props => {
           Predicates.at('document.type', 'project'),
           {}
         ).then(response => {
-          setProjects(some(response.results.map(fromDocumentToProject)))
+          setProjects(some(response.results.map(fromDocumentToProject).sort(byClassment)))
         })
         .catch(console.error)
       }
@@ -119,13 +119,13 @@ export const Component: React.FC<Props> = props => {
         ref={el => setContainer(el)}
         onWheel={scrollWithWheel}
       >
-        <Content>
+        <Content id='projectContent'>
           {
             maybeProjects
               .map(projects => projects.map(
                 project => <ProjectPresentation key={project.uid} project={project} />
               ))
-              .getOrElse([<div>Chargement</div>])
+              .getOrElse([<div key='LOADING'>Chargement</div>])
           }
         </Content>
       </ScrollableArea>

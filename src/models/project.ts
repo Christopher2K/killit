@@ -7,6 +7,12 @@ export enum ProjectType {
   PHOTO = 'Photo'
 }
 
+export enum MainImageAlignment {
+  top = 'top',
+  center = 'center',
+  bottom = 'bottom'
+}
+
 export type Project = {
   uid: string
   title: string
@@ -17,7 +23,10 @@ export type Project = {
     fr: string
     en: string
   }
-  mainImage: string
+  mainImage: {
+    url: string
+    alignment: MainImageAlignment
+  }
   images: string[]
   miniatures: string[]
   embededVideos: string[]
@@ -35,9 +44,22 @@ export function fromDocumentToProject (rawData: any): Project {
       en: PrismicDom.RichText.asHtml(data.description_en)
     },
     year: data.date.split('-')[0],
-    mainImage: data.image_principale.url,
+    mainImage: {
+      url: data.image_principale.url,
+      alignment: data.image_principale_alignement
+    },
     images: data.images.map((img: any) => img.image.url),
     miniatures: data.miniatures.map((img: any) => img.miniature.url),
     embededVideos: data.videos_links.map((video: any) => video.video_link.url)
+  }
+}
+
+export function byClassment (a: Project, b: Project): number {
+  if (a.order < b.order) {
+    return 1
+  } if (a.order > b.order) {
+    return -1
+  } else {
+    return 0
   }
 }

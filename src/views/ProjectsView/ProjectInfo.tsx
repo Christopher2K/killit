@@ -72,8 +72,8 @@ export const ProjectInfo: React.FC<Props> = props => {
       justify='flex-start'
       align='flex-start'
     >
-      <Order>01</Order>
       <Separator src={separator} />
+      <Order>01</Order>
       <InformationContainer>
         <Information>{project.type}</Information>
         <Information>{project.year}</Information>
