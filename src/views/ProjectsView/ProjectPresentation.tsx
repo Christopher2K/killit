@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { css } from '@emotion/core'
+import { css, ClassNames, Interpolation } from '@emotion/core'
 import withProps from 'recompose/withProps'
 import { Link } from 'react-router-dom'
-import { none, some, Option } from 'fp-ts/lib/Option'
+import { fromNullable } from 'fp-ts/lib/Option'
 
 import { Flex } from 'components'
 import { titleFont, Colors, Spaces } from 'styles/variable'
@@ -15,6 +15,11 @@ import { ProjectInfo } from './ProjectInfo'
 enum ImageKind {
   horizontal = 'horizontal',
   vertical = 'vertical'
+}
+
+type ComputedDimensions = {
+  width: number
+  height: number
 }
 
 const Root = styled(withProps({
@@ -37,17 +42,14 @@ const Root = styled(withProps({
 `
 
 type ProjectImageProps = {
-  mbImageKind: Option<ImageKind>
+  imageKind: ImageKind
 }
-
 const ProjectImage = styled.img<ProjectImageProps>`
   position: relative;
   height: 100%;
-  width: auto;
+  width: 100%;
   right: 0;
   z-index: 10;
-
-  visibility: ${props => props.mbImageKind.isSome() ? 'visible' : 'hidden'};
   filter: blur(0);
   transition: 300ms filter ease, 300ms opacity ease;
 
@@ -62,7 +64,6 @@ const ProjectImage = styled.img<ProjectImageProps>`
 type ProjectTitleProps = {
   imageKind: ImageKind
 }
-
 const ProjectTitle = styled.h1<ProjectTitleProps>`
   position: absolute;
   top: 50%;
@@ -104,7 +105,7 @@ const StyledProjectInfo = styled(ProjectInfo)`
   }
 `
 
-const ImageContainer = styled(Link)`
+const getLinkClassName: (cssTool: (template: TemplateStringsArray, ...args: Array<Interpolation>) => string) => string = (cssTool) => cssTool`
   display: flex;
   flex-direction: row;
   position: relative;
@@ -164,19 +165,15 @@ const ImageContainer = styled(Link)`
 
 type OverlayProps = {
   alignment: MainImageAlignment
-  mbImageKind: Option<ImageKind>
+  dimensions: ComputedDimensions
 }
 const Overlay = styled.div<OverlayProps>`
   position: relative;
   background-color: transparent;
-  height: 100%;
-  ${props => props.mbImageKind.map(
-    imageKind => imageKind === 'horizontal' ? css`
-      max-height: 80%;
-    ` : css`
-      max-height: 100%;
-    `
-  ).getOrElse(css``)}
+  ${props => css`
+    width: ${props.dimensions.width}px;
+    height: ${props.dimensions.height}px;
+  `}
   ${props => {
     switch (props.alignment) {
       case 'top':
@@ -202,30 +199,63 @@ type Props = {
 export const ProjectPresentation: React.FC<Props> = ({
   project
 }) => {
-  const [mbImageKind, setImageKind] = React.useState<Option<ImageKind>>(none)
+  const { url, dimensions, alignment } = project.mainImage
+  const imageKind = dimensions.width >= dimensions.height ? ImageKind.horizontal : ImageKind.vertical
 
-  function findOutImageKind (evt: React.SyntheticEvent<HTMLImageElement, Event>) {
-    const element: HTMLImageElement = evt.target as HTMLImageElement
-    const { width, height } = element.getBoundingClientRect()
-    const imageKind = width >= height ? some(ImageKind.horizontal) : some(ImageKind.vertical)
-    setImageKind(imageKind)
+  const [computedDimensions, setComputedDimensions] = React.useState<ComputedDimensions>({ width: 0, height: 0 })
+
+  const _imageContainerEl = React.useRef(null)
+
+  function updateDimensions () {
+    const mbImageContainerEl = fromNullable(_imageContainerEl.current)
+    mbImageContainerEl.map(imageContainerEl => {
+      console.warn(imageContainerEl)
+      const { height: imgContainerHeight } = (imageContainerEl as HTMLImageElement).getBoundingClientRect()
+      const { width, height } = dimensions
+
+      if (width >= height) {
+        const maxContentHeight = (0.8) * imgContainerHeight
+        const newWidth = (maxContentHeight / height) * width
+        setComputedDimensions({ width: newWidth, height: maxContentHeight })
+      } else {
+        const newWidth = (imgContainerHeight / height) * width
+        setComputedDimensions({ width: newWidth, height: imgContainerHeight })
+      }
+    })
   }
+
+  window.addEventListener('resize', updateDimensions)
+
+  React.useEffect(() => {
+    updateDimensions()
+    return () => {
+      window.removeEventListener('resize', updateDimensions)
+    }
+  }, [])
 
   return (
     <Root>
-      <ImageContainer to={`/projet/${project.uid}`}>
-        <Overlay alignment={project.mainImage.alignment} mbImageKind={mbImageKind}>
-          <ProjectImage
-            src={project.mainImage.url}
-            onLoad={findOutImageKind}
-            mbImageKind={mbImageKind}
-          />
-          {mbImageKind.map(imageKind =>
-            <ProjectTitle imageKind={imageKind}>{project.title}</ProjectTitle>
-          ).toNullable()}
-        </Overlay>
-        <StyledProjectInfo project={project} />
-      </ImageContainer>
+      <ClassNames>
+        {({ css }) => (
+          <Link
+            className={getLinkClassName(css)}
+            innerRef={_imageContainerEl}
+            to={`/projet/${project.uid}`}
+          >
+            <Overlay
+              alignment={alignment}
+              dimensions={computedDimensions}
+            >
+              <ProjectImage
+                src={url}
+                imageKind={imageKind}
+              />
+              <ProjectTitle imageKind={imageKind}>{project.title}</ProjectTitle>
+            </Overlay>
+            <StyledProjectInfo project={project} />
+          </Link>
+        )}
+      </ClassNames>
     </Root>
   )
 }

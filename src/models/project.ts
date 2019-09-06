@@ -26,6 +26,10 @@ export type Project = {
   mainImage: {
     url: string
     alignment: MainImageAlignment
+    dimensions: {
+      width: number
+      height: number
+    }
   }
   images: string[]
   miniatures: string[]
@@ -46,7 +50,8 @@ export function fromDocumentToProject (rawData: any): Project {
     year: data.date.split('-')[0],
     mainImage: {
       url: data.image_principale.url,
-      alignment: data.image_principale_alignement
+      alignment: data.image_principale_alignement,
+      dimensions: data.image_principale.dimensions
     },
     images: data.images.map((img: any) => img.image.url),
     miniatures: data.miniatures.map((img: any) => img.miniature.url),
