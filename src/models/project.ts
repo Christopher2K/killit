@@ -17,7 +17,7 @@ export type Project = {
   uid: string
   title: string
   type: ProjectType
-  order: string
+  order: number
   year: string
   description: {
     fr: string

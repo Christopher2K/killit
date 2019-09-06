@@ -73,7 +73,7 @@ export const ProjectInfo: React.FC<Props> = props => {
       align='flex-start'
     >
       <Separator src={separator} />
-      <Order>01</Order>
+      <Order>{project.order < 9 ? `0${project.order}` : project.order }</Order>
       <InformationContainer>
         <Information>{project.type}</Information>
         <Information>{project.year}</Information>
