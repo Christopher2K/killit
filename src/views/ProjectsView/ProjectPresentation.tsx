@@ -68,11 +68,12 @@ const ProjectTitle = styled.h1<ProjectTitleProps>`
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 95%;
+  width: ${props => props.imageKind === 'vertical' ? '95%' : '70%'};
+  line-height: 1.2;
   transform: translate(-50%, -50%);
   font-family: ${titleFont}, sans-serif;
   text-align: center;
-  font-size: 6rem;
+  font-size: 4rem;
   font-weight: bold;
   color: ${Colors.linkWater};
   z-index: 5;
@@ -90,8 +91,8 @@ const ProjectTitle = styled.h1<ProjectTitleProps>`
 
 const StyledProjectInfo = styled(ProjectInfo)`
   position: absolute;
-  bottom: 0;
-  left: -20%;
+  bottom: 20px;
+  left: 20px;
   visibility: hidden;
   opacity: 0;
   transition: 0ms visibility 300ms ease;
@@ -131,7 +132,7 @@ const getLinkClassName: (cssTool: (template: TemplateStringsArray, ...args: Arra
 
     ${ProjectImage} {
       opacity: 0.2;
-      filter: blur(4px);
+      filter: blur(4px) grayscale(0.5);
     }
   }
 
@@ -250,8 +251,8 @@ export const ProjectPresentation: React.FC<Props> = ({
                 imageKind={imageKind}
               />
               <ProjectTitle imageKind={imageKind}>{project.title}</ProjectTitle>
+              <StyledProjectInfo project={project} />
             </Overlay>
-            <StyledProjectInfo project={project} />
           </Link>
         )}
       </ClassNames>
