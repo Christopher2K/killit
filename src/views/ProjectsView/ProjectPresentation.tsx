@@ -209,7 +209,6 @@ export const ProjectPresentation: React.FC<Props> = ({
   function updateDimensions () {
     const mbImageContainerEl = fromNullable(_imageContainerEl.current)
     mbImageContainerEl.map(imageContainerEl => {
-      console.warn(imageContainerEl)
       const { height: imgContainerHeight } = (imageContainerEl as HTMLImageElement).getBoundingClientRect()
       const { width, height } = dimensions
 
