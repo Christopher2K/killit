@@ -1,11 +1,12 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import withProps from 'recompose/withProps'
+import { withRouter, RouteComponentProps } from 'react-router'
 
 import separator from 'assets/icons/separator.svg'
 import { titleFont, Spaces, Colors } from 'styles/variable'
 import { mobile } from 'styles/responsive'
-import { Flex } from 'components'
+import { Flex, Loader } from 'components'
 import { Project } from 'models'
 
 const Root = styled(Flex)`
@@ -38,40 +39,60 @@ const InformationContainer = styled(withProps({
   direction: 'column',
   justify: 'flex-start',
   align: 'flex-start'
-})(Flex))``
+})(Flex))`
+  margin-left: ${Spaces.tiny};
+`
 
 const Information = styled.p`
   font-family: ${titleFont};
-  font-size: 1rem;
+  font-size: 1.4rem;
   letter-spacing: 4px;
   text-transform: uppercase;
   color: ${Colors.linkWater};
 
+  &:first-of-type {
+    margin-bottom: 0.4rem;
+  }
+
   ${mobile} {
     color: ${Colors.regentGray};
     letter-spacing: 2px;
-    font-size: 0.8rem;
+    font-size: 1rem;
   }
 `
 
-type Props = {
+type Props = RouteComponentProps & {
   className?: string
   project: Project
+  showed: boolean
 }
 
-export const ProjectInfo: React.FC<Props> = props => {
+const ProjectInfoComponent: React.FC<Props> = props => {
   const {
     className,
-    project
+    project,
+    showed,
+    history
   } = props
+
+  function goToProject () {
+    history.push(`/projet/${project.uid}`)
+  }
 
   return (
     <Root
       className={className}
       direction='row'
       justify='flex-start'
-      align='flex-start'
+      align='center'
     >
+      <Loader
+        spinningTime={10}
+        size={33}
+        color={Colors.dodgerBlue}
+        run={showed}
+        onSpinningEnd={goToProject}
+      />
       <Separator src={separator} />
       <Order>{project.order < 9 ? `0${project.order}` : project.order }</Order>
       <InformationContainer>
@@ -81,3 +102,5 @@ export const ProjectInfo: React.FC<Props> = props => {
     </Root>
   )
 }
+
+export const ProjectInfo = withRouter(ProjectInfoComponent)

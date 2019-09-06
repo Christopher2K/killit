@@ -204,6 +204,7 @@ export const ProjectPresentation: React.FC<Props> = ({
   const imageKind = dimensions.width >= dimensions.height ? ImageKind.horizontal : ImageKind.vertical
 
   const [computedDimensions, setComputedDimensions] = React.useState<ComputedDimensions>({ width: 0, height: 0 })
+  const [infoShowed, setInfoShowed] = React.useState<boolean>(false)
 
   const _imageContainerEl = React.useRef(null)
 
@@ -241,6 +242,9 @@ export const ProjectPresentation: React.FC<Props> = ({
             className={getLinkClassName(css)}
             innerRef={_imageContainerEl}
             to={`/projet/${project.uid}`}
+            onMouseEnter={() => setInfoShowed(true)}
+            onMouseOver={() => setInfoShowed(true)}
+            onMouseLeave={() => setInfoShowed(false)}
           >
             <Overlay
               alignment={alignment}
@@ -251,7 +255,7 @@ export const ProjectPresentation: React.FC<Props> = ({
                 imageKind={imageKind}
               />
               <ProjectTitle imageKind={imageKind}>{project.title}</ProjectTitle>
-              <StyledProjectInfo project={project} />
+              <StyledProjectInfo project={project} showed={infoShowed} />
             </Overlay>
           </Link>
         )}

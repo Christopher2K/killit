@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Flex } from 'components'
 import styled from '@emotion/styled'
+import { ClassNames } from '@emotion/core'
 import { NavLink } from 'react-router-dom'
 
 import * as Variables from 'styles/variable'
@@ -92,26 +93,40 @@ export const Items: React.FunctionComponent<Props> = ({
     currentPath={currentPath}
     open={open}
   >
-    <CloseButton
-      onClick={onCloseClick}
-    >
-      <img src={closeIcon}/>
-    </CloseButton>
-    <Item
-      onClick={onLinkClick}
-      to='/'>
-      Projet
-    </Item>
-    <Item
-      onClick={onLinkClick}
-      to='/a-propos'>
-      À propos
-    </Item>
-    <Item
-      onClick={onLinkClick}
-      to='/contact'>
-      Contact
-    </Item>
+    <ClassNames>
+      {({ css }) => {
+        const active = css`
+          color: ${Variables.Colors.dodgerBlue} !important;
+        `
+        return (
+          <>
+            <CloseButton
+              onClick={onCloseClick}
+            >
+              <img src={closeIcon}/>
+            </CloseButton>
+            <Item
+              activeClassName={active}
+              onClick={onLinkClick}
+              to='/'>
+              Projet
+            </Item>
+            <Item
+              activeClassName={active}
+              onClick={onLinkClick}
+              to='/a-propos'>
+              À propos
+            </Item>
+            <Item
+              activeClassName={active}
+              onClick={onLinkClick}
+              to='/contact'>
+              Contact
+            </Item>
+          </>
+        )
+      }}
+    </ClassNames>
   </Root>
 )
 
