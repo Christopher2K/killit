@@ -24,15 +24,14 @@ export const base = css`
     font-family: 'Source Sans Pro';
     box-sizing: border-box;
     scrollbar-width: none;
-  }
 
-  ::-webkit-scrollbar {
-    display: none;
-    width: 0px;  /* remove scrollbar space */
-    background: transparent;  /* optional: just make scrollbar invisible */
-  }
-  /* optional: show position indicator in red */
-  ::-webkit-scrollbar-thumb {
-    background: #FF0000;
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+
+    &::-webkit-scrollbar {
+      display: none;
+      width: 0px;  /* remove scrollbar space */
+      background: transparent;  /* optional: just make scrollbar invisible */
+    }
   }
 `
