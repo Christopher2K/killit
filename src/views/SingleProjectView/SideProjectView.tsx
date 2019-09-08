@@ -7,6 +7,7 @@ import { Flex } from 'components'
 import { mobile } from 'styles/responsive'
 import { titleFont, Colors } from 'styles/variable'
 import { boolState } from 'sharedHooks/boolState'
+import { Project } from 'models'
 
 import { LoadableImage } from './LoadableImage'
 
@@ -47,9 +48,12 @@ type ProjectTitleProps = {
 }
 
 const ProjectTitle = styled.h3<ProjectTitleProps>`
-  transform: rotate(${props => props.side === 'left' ? '-90deg' : '270deg'});
-  align-self: ${props => props.side === 'left' ? 'flex-start' : 'flex-end'};
+  transform: rotate(180deg);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  align-self: center;
   font-family: ${titleFont}, sans-serif;
+  white-space: nowrap;
   font-size: 1.5rem;
   font-weight: bold;
   color: ${Colors.paleSky};
@@ -68,11 +72,13 @@ const ImagesContainer = styled(withProps({
 type Props = {
   side: Side
   showRoot: boolean
+  project: Project
 }
 
 export const SideProjectView: React.FunctionComponent<Props> = ({
   side,
-  showRoot
+  showRoot,
+  project
 }) => {
   const {
     bool: showPics,
@@ -91,18 +97,18 @@ export const SideProjectView: React.FunctionComponent<Props> = ({
     <Root
       side={side}
       showRoot={showRoot}
-      to='/projet/test'
+      to={`/projet/${project.uid}`}
       onMouseEnter={showPictures}
       onMouseLeave={hidePictures}
     >
       {showPics ? (
         <ImagesContainer>
-          <LoadableImage imageUri='https://www.tourisme.fr/images/otf_offices/792/pont-vieux-d-viet.jpg' />
-          <LoadableImage imageUri='https://www.tourisme.fr/images/otf_offices/792/pont-vieux-d-viet.jpg' />
-          <LoadableImage imageUri='https://www.tourisme.fr/images/otf_offices/792/pont-vieux-d-viet.jpg' />
+          {project.miniatures.map(uri =>
+            <LoadableImage imageUri={uri} key={uri} />
+          )}
         </ImagesContainer>
       ) : (
-        <ProjectTitle side={side}>Titre du projet</ProjectTitle>
+        <ProjectTitle side={side}>{project.title}</ProjectTitle>
       )}
     </Root>
   )

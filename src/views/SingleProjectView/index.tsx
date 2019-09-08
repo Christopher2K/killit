@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Predicates } from 'prismic-javascript'
 import { RouteComponentProps } from 'react-router'
 import styled from '@emotion/styled'
 import withProps from 'recompose/withProps'
@@ -50,6 +51,8 @@ const Component: React.FC<Props> = props => {
   const rootDescriptionElRef = React.useRef<HTMLDivElement>(null)
   const [container, setContainer] = React.useState<HTMLDivElement | null>(null)
   const [maybeProject, setProject] = React.useState<Option<Project>>(none)
+  const [maybePrevProject, setPrevProject] = React.useState<Option<Project>>(none)
+  const [maybeNextProject, setNextProject] = React.useState<Option<Project>>(none)
   const { bool: descriptionOpen, setBool } = boolState(false)
   const { bool: displaySideProjects, setBool: setDisplaySideProjects } = boolState(false)
 
@@ -70,20 +73,51 @@ const Component: React.FC<Props> = props => {
       })
   }
 
-  React.useEffect(() => {
+  function getProjectFromQueryResponse (rawData: any): Option<Project> {
+    const { results_size, results: [data] } = rawData
+    if (results_size !== 1) {
+      return none
+    } else {
+      return some(fromDocumentToProject(data))
+    }
+  }
+
+  function initView () {
+    fromNullable(container)
+      .map(el => {
+        el.scrollTo({
+          top: 0
+        })
+      })
+    setProject(none)
+    setPrevProject(none)
+    setNextProject(none)
+    setDisplaySideProjects(false)
+
     maybePrismic.map(prismic => {
-      if (maybeProject.isNone()) {
-        prismic.getByUID('project', match.params.name)
-          .then(response => setProject(some(fromDocumentToProject(response))))
-          .catch(console.error)
-      }
+      prismic.getByUID('project', match.params.name)
+        .then(response => {
+          const thisProject = fromDocumentToProject(response)
+          const prevProjectQuery = prismic.query(Predicates.at('my.project.classement', response.data.classement - 1), {})
+          const nextProjectQuery = prismic.query(Predicates.at('my.project.classement', response.data.classement + 1), {})
+          Promise.all([prevProjectQuery, nextProjectQuery])
+            .then(([prevResp, nextResp]) => {
+              const mbNextProject = getProjectFromQueryResponse(prevResp)
+              const mbPrevProject = getProjectFromQueryResponse(nextResp)
+              setPrevProject(mbPrevProject)
+              setNextProject(mbNextProject)
+              setProject(some(thisProject))
+            })
+            .catch(console.error)
+        })
+        .catch(console.error)
     })
-  })
+  }
+
+  React.useEffect(initView, [match.params])
 
   return (
-    <PageContent
-      onScroll={onContentScroll}
-    >
+    <PageContent onScroll={onContentScroll}>
       {
         maybeProject
           .map(project => {
@@ -107,12 +141,12 @@ const Component: React.FC<Props> = props => {
                   {project.embededVideos.map((uri, index) => <LoadableVideo key={index} videoUri={uri} />)}
                   <MobileSeparator />
                   <BottomProjectsContainer>
-                    <BottomProject side='left' />
-                    <BottomProject side='right' />
+                    {maybePrevProject.map(prevProject => <BottomProject project={prevProject} side='left' />).toNullable()}
+                    {maybeNextProject.map(nextProject => <BottomProject project={nextProject} side='right' />).toNullable()}
                   </BottomProjectsContainer>
                 </Container>
-                <SideProjectView showRoot={displaySideProjects} side='left' />
-                <SideProjectView showRoot={displaySideProjects} side='right' />
+                {maybePrevProject.map(prevProject => <SideProjectView project={prevProject} showRoot={displaySideProjects} side='left' />).toNullable()}
+                {maybeNextProject.map(nextProject => <SideProjectView project={nextProject} showRoot={displaySideProjects} side='right' />).toNullable()}
                 <ScrollStatus scrollableElement={container} direction='top' />
               </React.Fragment>
             )
