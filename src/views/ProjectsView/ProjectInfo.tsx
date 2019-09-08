@@ -9,9 +9,15 @@ import { mobile } from 'styles/responsive'
 import { Flex, Loader } from 'components'
 import { Project } from 'models'
 
+const StyledLoader = styled(Loader)``
+
 const Root = styled(Flex)`
   ${mobile} {
     margin-top: 5px;
+
+    ${StyledLoader} {
+      display: none;
+    }
   }
 `
 
@@ -41,6 +47,10 @@ const InformationContainer = styled(withProps({
   align: 'flex-start'
 })(Flex))`
   margin-left: ${Spaces.tiny};
+
+  ${mobile} {
+    margin: 5px 0 0 0;
+  }
 `
 
 const Information = styled.p`
@@ -86,7 +96,7 @@ const ProjectInfoComponent: React.FC<Props> = props => {
       justify='flex-start'
       align='center'
     >
-      <Loader
+      <StyledLoader
         spinningTime={10}
         size={33}
         color={Colors.dodgerBlue}

@@ -29,6 +29,7 @@ type Props = {
   spinningTime?: number
   infinite?: boolean
   run: boolean
+  className?: string
   onSpinningEnd?: () => void
 }
 
@@ -39,13 +40,14 @@ export const Loader: React.FC<Props> = props => {
     infinite = false,
     color,
     run,
-    onSpinningEnd
+    onSpinningEnd,
+    className
   } = props
 
   return (
     <>
       {run && (
-        <Root width={size} height={size}>
+        <Root width={size} height={size} className={className}>
           <Circle
             spinningTime={spinningTime}
             strokeWidth={size / 2}

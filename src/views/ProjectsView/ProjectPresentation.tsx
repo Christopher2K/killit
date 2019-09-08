@@ -85,7 +85,10 @@ const ProjectTitle = styled.h1<ProjectTitleProps>`
     font-size: 1.4rem;
     text-shadow: none;
     color: ${Colors.linkWater};
-    margin-top: 5px;
+    margin: 5px 0 0 0;
+    width: 100%;
+    transform: unset;
+    text-align: left;
   }
 `
 
@@ -138,11 +141,16 @@ const getLinkClassName: (cssTool: (template: TemplateStringsArray, ...args: Arra
 
   ${mobile} {
     position: relative;
+    flex-direction: column;
     height: auto;
     width: 100%;
     height: auto;
 
     ${ProjectTitle} {
+      visibility: visible;
+    }
+
+    ${StyledProjectInfo} {
       visibility: visible;
     }
 
@@ -191,6 +199,11 @@ const Overlay = styled.div<OverlayProps>`
         `
     }
   }}
+
+  ${mobile} {
+    width: 100%;
+    height: auto;
+  }
 `
 
 type Props = {
