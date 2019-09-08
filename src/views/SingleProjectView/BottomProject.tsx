@@ -24,6 +24,8 @@ const DirectionIcon = styled.img`
 
 const ProjectImage = styled.img`
   padding: 0 ${Spaces.medium};
+  width: calc(100% - 10px);
+  height: auto;
 `
 
 type Props = {
@@ -35,11 +37,11 @@ export const BottomProject: React.FC<Props> = ({
 }) => {
   return (
     <Root to='/'>
-    {side === 'left' && <DirectionIcon src={chevronLeft} />}
-    <ProjectImage
-      src='https://www.tourisme.fr/images/otf_offices/792/pont-vieux-d-viet.jpg'
-    />
-    {side === 'right' && <DirectionIcon src={chevronRight} />}
+      {side === 'left' && <DirectionIcon src={chevronLeft} />}
+      <ProjectImage
+        src='https://www.tourisme.fr/images/otf_offices/792/pont-vieux-d-viet.jpg'
+      />
+      {side === 'right' && <DirectionIcon src={chevronRight} />}
     </Root>
   )
 }

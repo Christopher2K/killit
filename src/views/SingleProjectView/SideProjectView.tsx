@@ -14,6 +14,7 @@ type Side = 'left' | 'right'
 
 type RootProps = {
   side: Side
+  showRoot: boolean
 }
 const Root = styled(Link)<RootProps>`
   position: fixed;
@@ -23,7 +24,7 @@ const Root = styled(Link)<RootProps>`
   height: 100%;
   min-height: 600px;
 
-  display: flex;
+  display: ${props => props.showRoot ? 'flex' : 'none'};
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -56,19 +57,22 @@ const ProjectTitle = styled.h3<ProjectTitleProps>`
 
 const ImagesContainer = styled(withProps({
   direction: 'column',
-  justify: 'flex-start',
-  align: 'flex-start'
+  justify: 'center',
+  align: 'center'
 })(Flex))`
   width: 80%;
   align-self: center;
+  height: 100%;
 `
 
 type Props = {
   side: Side
+  showRoot: boolean
 }
 
 export const SideProjectView: React.FunctionComponent<Props> = ({
-  side
+  side,
+  showRoot
 }) => {
   const {
     bool: showPics,
@@ -86,6 +90,7 @@ export const SideProjectView: React.FunctionComponent<Props> = ({
   return (
     <Root
       side={side}
+      showRoot={showRoot}
       to='/projet/test'
       onMouseEnter={showPictures}
       onMouseLeave={hidePictures}

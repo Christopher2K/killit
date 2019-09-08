@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router'
 import styled from '@emotion/styled'
 import withProps from 'recompose/withProps'
 import ResolvedApi from 'prismic-javascript/d.ts/ResolvedApi'
-import { Option, some, none } from 'fp-ts/lib/Option'
+import { Option, some, none, fromNullable } from 'fp-ts/lib/Option'
 
 import { PageContent, Container, ScrollStatus, Flex } from 'components'
 import { mobile } from 'styles/responsive'
@@ -47,12 +47,27 @@ const Component: React.FC<Props> = props => {
     match,
     maybePrismic
   } = props
+  const rootDescriptionElRef = React.useRef<HTMLDivElement>(null)
   const [container, setContainer] = React.useState<HTMLDivElement | null>(null)
   const [maybeProject, setProject] = React.useState<Option<Project>>(none)
   const { bool: descriptionOpen, setBool } = boolState(false)
+  const { bool: displaySideProjects, setBool: setDisplaySideProjects } = boolState(false)
 
   function toggleDescription () {
     setBool(!descriptionOpen)
+  }
+
+  function onContentScroll () {
+    fromNullable(rootDescriptionElRef.current)
+      .map(rootDescriptionEl => {
+        const { top, height } = rootDescriptionEl.getBoundingClientRect()
+        const offset = top + height
+        if (offset <= 0 && !displaySideProjects) {
+          setDisplaySideProjects(true)
+        } else if (offset >= 0 && displaySideProjects) {
+          setDisplaySideProjects(false)
+        }
+      })
   }
 
   React.useEffect(() => {
@@ -66,7 +81,9 @@ const Component: React.FC<Props> = props => {
   })
 
   return (
-    <PageContent>
+    <PageContent
+      onScroll={onContentScroll}
+    >
       {
         maybeProject
           .map(project => {
@@ -81,6 +98,7 @@ const Component: React.FC<Props> = props => {
                     project={project}
                   />
                   <Description
+                    rootRef={rootDescriptionElRef}
                     open={descriptionOpen}
                     fr={project.description.fr}
                     en={project.description.en}
@@ -93,8 +111,8 @@ const Component: React.FC<Props> = props => {
                     <BottomProject side='right' />
                   </BottomProjectsContainer>
                 </Container>
-                <SideProjectView side='left' />
-                <SideProjectView side='right' />
+                <SideProjectView showRoot={displaySideProjects} side='left' />
+                <SideProjectView showRoot={displaySideProjects} side='right' />
                 <ScrollStatus scrollableElement={container} direction='top' />
               </React.Fragment>
             )

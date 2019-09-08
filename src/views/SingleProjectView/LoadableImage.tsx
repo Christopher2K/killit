@@ -1,9 +1,9 @@
 import * as React from 'react'
 import styled from '@emotion/styled'
 
-import { Flex } from 'components'
+import { Flex, Loader } from 'components'
 import { boolState } from 'sharedHooks/boolState'
-import { Spaces } from 'styles/variable'
+import { Spaces, Colors } from 'styles/variable'
 
 type Props = {
   imageUri: string
@@ -13,16 +13,31 @@ type ImageProps = {
   loaded: boolean
 }
 
-const Root = styled(Flex)`
+type RootProps = {
+  fixedHeight: boolean
+}
+const Root = styled(Flex)<RootProps>`
+  position: relative;
   margin-bottom: ${Spaces.large};
   width: 100%;
-  height: auto;
+  height: ${props => props.fixedHeight ? '50px' : 'auto'};
+  flex-shrink: 0;
+  flex-grow: 0;
+`
+
+const LoaderRoot = styled(Flex)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 `
 
 const ImageComponent = styled.img<ImageProps>`
   visibility: ${props => props.loaded ? 'visible' : 'hidden'};
-  max-width: 100%;
+  width: 100%;
   height: auto;
+  transition: visibility 100ms;
 `
 
 export const LoadableImage: React.FunctionComponent<Props> = ({
@@ -60,6 +75,7 @@ export const LoadableImage: React.FunctionComponent<Props> = ({
       direction='row'
       justify='center'
       align='center'
+      fixedHeight={!imageLoaded && !error}
     >
       <ImageComponent
         ref={imageElement}
@@ -67,8 +83,15 @@ export const LoadableImage: React.FunctionComponent<Props> = ({
         onLoad={onImageLoaded}
         onError={onImageError}
       />
-      {(imageLoaded && error) && <div>Error</div>}
-      {(!imageLoaded && !error) && <div>Loading....</div>}
+      {(!imageLoaded && !error) && (
+        <LoaderRoot
+          direction='row'
+          justify='center'
+          align='center'
+        >
+          <Loader run size={20} color={Colors.dodgerBlue} />
+        </LoaderRoot>
+      )}
     </Root>
   )
 }

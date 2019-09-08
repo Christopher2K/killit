@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { withProps } from 'recompose'
 import styled from '@emotion/styled'
 
 import { Flex } from 'components'
@@ -9,13 +8,7 @@ import { mobile } from 'styles/responsive'
 type RootProps = {
   open: boolean
 }
-const Root = styled(
-  withProps({
-    direction: 'row',
-    justify: 'flex-start',
-    align: 'flex-start'
-  })(Flex)
-)<RootProps>`
+const Root = styled(Flex)<RootProps>`
   width: 100%;
   margin-bottom: ${Variables.Spaces.medium};
 
@@ -54,15 +47,22 @@ const Paragraph = styled.p`
 `
 
 type Props = {
+  rootRef: React.MutableRefObject<HTMLDivElement | null>
   open: boolean
   fr: string
   en: string
 }
 
 export const Description: React.FunctionComponent<Props> = props => {
-  const { open, fr, en } = props
+  const { open, fr, en, rootRef } = props
   return (
-    <Root open={open}>
+    <Root
+      direction='row'
+      justify='flex-start'
+      align='flex-start'
+      open={open}
+      ref={rootRef}
+    >
       <Paragraph dangerouslySetInnerHTML={{ __html: fr }}/>
       <Paragraph dangerouslySetInnerHTML={{ __html: en }}/>
     </Root>
