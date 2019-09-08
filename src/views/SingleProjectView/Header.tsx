@@ -73,7 +73,7 @@ const Title = styled.h1`
   font-family: ${Variables.titleFont};
   font-weight: bold;
   font-size: 3.2rem;
-  color: ${Variables.Colors.paleSky};
+  color: ${Variables.Colors.shuttleGray};
   margin-right: ${Variables.Spaces.tiny};
 
   ${mobile} {
@@ -87,7 +87,7 @@ const Information = styled.h2`
   display: none;
   font-family: ${Variables.titleFont};
   font-size: 1.3rem;
-  color: ${Variables.Colors.paleSky};
+  color: ${Variables.Colors.shuttleGray};
 
   &:first-of-type {
     line-height: 2;
@@ -132,7 +132,7 @@ const ContentToggle = styled.button`
 const DekstopInformation = styled.p`
   margin-top: ${Variables.Spaces.large};
   font-size: 1.5rem;
-  color: ${Variables.Colors.paleSky};
+  color: ${Variables.Colors.shuttleGray};
 
   ${mobile} {
     display: none;

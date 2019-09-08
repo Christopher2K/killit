@@ -7,7 +7,7 @@ export const Separator = styled.hr`
   width: 100%;
   border-width: 1px;
   border-style: solid;
-  border-color: ${Colors.paleSky};
+  border-color: ${Colors.shuttleGray};
   border-top: 0;
   margin: 0;
 `
