@@ -24,7 +24,7 @@ const Root = styled(Flex)`
 const Order = styled.h1`
   font-family: ${titleFont}, sans-serif;
   line-height: 0.5;
-  font-size: 5.1rem;
+  font-size: 4.8rem;
   font-style: italic;
   color: ${Colors.linkWater};
 
