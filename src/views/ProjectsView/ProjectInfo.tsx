@@ -97,7 +97,7 @@ const ProjectInfoComponent: React.FC<Props> = props => {
       align='center'
     >
       <StyledLoader
-        spinningTime={10}
+        spinningTime={7}
         size={33}
         color={Colors.dodgerBlue}
         run={showed}

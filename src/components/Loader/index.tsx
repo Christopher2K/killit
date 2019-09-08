@@ -37,7 +37,7 @@ type Props = {
 export const Loader: React.FC<Props> = props => {
   const {
     size = 100,
-    spinningTime = 10,
+    spinningTime = 5,
     infinite = false,
     color,
     run,
