@@ -8,6 +8,7 @@ import { Flex } from 'components'
 import { Project } from 'models'
 import * as Variables from 'styles/variable'
 import { mobile } from 'styles/responsive'
+import { firstLetterCapitalized } from 'utils/string'
 
 import { Separator, MobileSeparator } from './Separator'
 
@@ -34,7 +35,7 @@ const InformationsContainer = styled(
   })(Flex)
 )`
   width: 100%;
-  margin-bottom: ${Variables.Spaces.small};
+  margin-bottom: 1.5rem;
 
   ${mobile} {
     margin: ${Variables.Spaces.small} 0;
@@ -71,7 +72,7 @@ const TitleContainer = styled(
 const Title = styled.h1`
   font-family: ${Variables.titleFont};
   font-weight: bold;
-  font-size: 5rem;
+  font-size: 3.2rem;
   color: ${Variables.Colors.paleSky};
   margin-right: ${Variables.Spaces.tiny};
 
@@ -83,6 +84,7 @@ const Title = styled.h1`
 `
 
 const Information = styled.h2`
+  display: none;
   font-family: ${Variables.titleFont};
   font-size: 1.3rem;
   color: ${Variables.Colors.paleSky};
@@ -127,6 +129,16 @@ const ContentToggle = styled.button`
   }
 `
 
+const DekstopInformation = styled.p`
+  margin-top: ${Variables.Spaces.large};
+  font-size: 1.5rem;
+  color: ${Variables.Colors.paleSky};
+
+  ${mobile} {
+    display: none;
+  }
+`
+
 interface Props {
   project: Project
   contentOpen: boolean
@@ -146,11 +158,11 @@ export const Header: React.FunctionComponent<Props> = props => {
           </ContentToggle>
         </TitleContainer>
         <SubInformationContainer>
-          <Information>{project.type}</Information>
-          <Information>{project.year}</Information>
+          <Information>{project.type}, {project.year}</Information>
         </SubInformationContainer>
       </InformationsContainer>
       <Separator />
+      <DekstopInformation>{firstLetterCapitalized(project.type)}, {project.year}</DekstopInformation>
     </Root>
   )
 
