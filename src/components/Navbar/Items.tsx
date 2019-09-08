@@ -108,6 +108,7 @@ export const Items: React.FunctionComponent<Props> = ({
             <Item
               activeClassName={active}
               onClick={onLinkClick}
+              exact
               to='/'>
               Projet
             </Item>

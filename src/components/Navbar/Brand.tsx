@@ -1,7 +1,7 @@
 import * as React from 'react'
 import styled from '@emotion/styled'
+import { Link } from 'react-router-dom'
 
-import { Flex } from 'components'
 import * as Variables from 'styles/variable'
 import { titleFontStyle } from 'styles/mixins'
 import { mobile } from 'styles/responsive'
@@ -10,9 +10,14 @@ type RootProps = {
   currentPath: string
 }
 
-const Root = styled(Flex)<RootProps>`
+const Root = styled(Link)<RootProps>`
   width: 235px;
   color: ${props => getBackgroundColor(props.currentPath)};
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-decoration: none;
 
   ${mobile} {
     width: 140px;
@@ -47,10 +52,8 @@ export const Brand: React.FunctionComponent<Props> = ({
   currentPath
 }) => (
   <Root
+    to='/'
     currentPath={currentPath}
-    direction='column'
-    justify='flex-start'
-    align='flex-start'
   >
     <Title>{firstRow}</Title>
     <Title withLeftOffset>{lastRow}</Title>
