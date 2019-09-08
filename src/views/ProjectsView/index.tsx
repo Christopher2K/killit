@@ -119,7 +119,7 @@ export const Component: React.FC<Props> = props => {
         ref={el => setContainer(el)}
         onWheel={scrollWithWheel}
       >
-        <Content id='projectContent'>
+        <Content>
           {
             maybeProjects
               .map(projects => projects.map(
