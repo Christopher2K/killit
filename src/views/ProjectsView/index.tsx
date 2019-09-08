@@ -125,7 +125,7 @@ export const Component: React.FC<Props> = props => {
               .map(projects => projects.map(
                 project => <ProjectPresentation key={project.uid} project={project} />
               ))
-              .getOrElse([<div key='LOADING'>Chargement</div>])
+              .getOrElse([])
           }
         </Content>
       </ScrollableArea>
