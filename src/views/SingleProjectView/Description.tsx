@@ -18,12 +18,20 @@ const Root = styled(Flex)<RootProps>`
   }
 `
 
-const Paragraph = styled.p`
+const Paragraph = styled.div`
   font-family: ${Variables.bodyFont};
   font-size: 1.5rem;
   flex: 1;
   color: ${Variables.Colors.shuttleGray};
   line-height: 150%;
+
+  p {
+    margin-bottom: ${Variables.Spaces.tiny};
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
 
 
   ${mobile} {
