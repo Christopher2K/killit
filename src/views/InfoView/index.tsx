@@ -8,10 +8,17 @@ import { Option, none, some } from 'fp-ts/lib/Option'
 import { Description } from './Description'
 import { PageContent, Container, Flex, Loader } from 'components'
 import { withPrismicApi } from 'utils/prismic'
-import { Colors } from 'styles/variable'
+import { Colors, specialFont } from 'styles/variable'
 
 const LoaderContainer = styled(Flex)`
   width: 100%;
+`
+
+const Introduction = styled(Description)`
+  p {
+    font-family: ${specialFont};
+    font-weight: 300;
+  }
 `
 
 type Props = {
@@ -37,9 +44,18 @@ const Component: React.FC<Props> = props => {
       <Container>
         {maybeDocument
           .map(document => (
-            <Description
-              dangerouslySetInnerHTML={{ __html: PrismicDom.RichText.asHtml(document.data.description) }}
-            />
+            <>
+              <Introduction
+                color={Colors.dodgerBlue}
+                dangerouslySetInnerHTML={{ __html: PrismicDom.RichText.asHtml(document.data.introduction) }}
+              />
+              <Description
+                dangerouslySetInnerHTML={{ __html: PrismicDom.RichText.asHtml(document.data.description_fr) }}
+              />
+              <Description
+                dangerouslySetInnerHTML={{ __html: PrismicDom.RichText.asHtml(document.data.description_en) }}
+              />
+            </>
           ))
           .getOrElse(
             <LoaderContainer

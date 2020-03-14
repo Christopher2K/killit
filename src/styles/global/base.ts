@@ -21,7 +21,7 @@ export const base = css`
   }
 
   * {
-    font-family: 'Source Sans Pro';
+    font-family: 'Favorit';
     box-sizing: border-box;
     scrollbar-width: none;
 

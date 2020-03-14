@@ -19,10 +19,11 @@ export const Spaces = {
   largest: '5rem'
 }
 
-export const titleFont = 'Bluu Next'
+export const titleFont = 'Favorit'
 export const titleLineHeight = '1.5'
-export const bodyFont = 'Source Sans Pro'
+export const bodyFont = 'Favorit'
+export const specialFont = 'Favorit Extended'
 
-export const navbarTopGap = '120px'
-export const navbarTopGapMobile = '85px'
+export const navbarTopGap = '110px'
+export const navbarTopGapMobile = '65px'
 export const scrollStatusHeight = '4px'

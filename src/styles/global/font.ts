@@ -1,35 +1,53 @@
 import { css } from '@emotion/core'
 
-import bluuNextBoldWoff2 from 'assets/fonts/bluunext-bold-webfont.woff2'
-import bluuNextBoldWoff from 'assets/fonts/bluunext-bold-webfont.woff'
-import bluuNextBoldTtf from 'assets/fonts/bluunext-bold.ttf'
-import bluuNextBoldItalicWoff2 from 'assets/fonts/bluunext-bolditalic-webfont.woff2'
-import bluuNextBoldItalicWoff from 'assets/fonts/bluunext-bolditalic-webfont.woff'
-import bluuNextBoldItalicTtf from 'assets/fonts/bluunext-bolditalic.ttf'
-import sourceSansProRegularTtf from 'assets/fonts/SourceSansPro-Regular.ttf'
+import favoritBoldWoff from 'assets/fonts/Favorit-Bold.woff'
+import favoritBoldWoff2 from 'assets/fonts/Favorit-Bold.woff2'
+import favoritRegularWoff from 'assets/fonts/Favorit-Regular.woff'
+import favoritRegularWoff2 from 'assets/fonts/Favorit-Regular.woff2'
+import favoritLightWoff from 'assets/fonts/Favorit-Light.woff'
+import favoritLightWoff2 from 'assets/fonts/Favorit-Light.woff2'
+import favoritExtendedLightWoff from 'assets/fonts/Favorit-ExtendedLight.woff'
+import favoritExtendedLightWoff2 from 'assets/fonts/Favorit-ExtendedLight.woff2'
+import favoritExtendedRegularWoff from 'assets/fonts/Favorit-ExtendedRegular.woff'
+import favoritExtendedRegularWoff2 from 'assets/fonts/Favorit-ExtendedRegular.woff2'
 
 export const font = css`
   @font-face {
-    font-family: 'Bluu Next';
-    src: url('${bluuNextBoldWoff2}') format('woff2'),
-         url('${bluuNextBoldWoff}') format('woff'),
-         url('${bluuNextBoldTtf}') format('truetype');
+    font-family: 'Favorit';
+    src: url('${favoritBoldWoff}') format('woff2'),
+         url('${favoritBoldWoff2}') format('woff');
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Favorit';
+    src: url('${favoritRegularWoff}') format('woff2'),
+         url('${favoritRegularWoff2}') format('woff');
     font-weight: normal;
     font-style: normal;
   }
 
   @font-face {
-    font-family: 'Bluu Next';
-    src: url('${bluuNextBoldItalicWoff2}') format('woff2'),
-         url('${bluuNextBoldItalicWoff}') format('woff'),
-         url('${bluuNextBoldItalicTtf}') format('truetype');
-    font-weight: normal;
-    font-style: italic;
+    font-family: 'Favorit';
+    src: url('${favoritLightWoff}') format('woff2'),
+         url('${favoritLightWoff2}') format('woff');
+    font-weight: 300;
+    font-style: normal;
   }
 
   @font-face {
-    font-family: 'Source Sans Pro';
-    src: url('${sourceSansProRegularTtf}') format('truetype');
+    font-family: 'Favorit Extended';
+    src: url('${favoritExtendedLightWoff}') format('woff2'),
+         url('${favoritExtendedLightWoff2}') format('woff');
+    font-weight: 300;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Favorit Extended';
+    src: url('${favoritExtendedRegularWoff}') format('woff2'),
+         url('${favoritExtendedRegularWoff2}') format('woff');
     font-weight: normal;
     font-style: normal;
   }

@@ -1,12 +1,11 @@
 import * as React from 'react'
-import { Flex } from 'components'
 import styled from '@emotion/styled'
 import { ClassNames } from '@emotion/core'
 import { NavLink } from 'react-router-dom'
 
+import { Flex } from 'components'
 import * as Variables from 'styles/variable'
 import closeIcon from 'assets/icons/close.svg'
-import { titleFontStyle } from 'styles/mixins'
 import { mobile } from 'styles/responsive'
 
 type RootProps = {
@@ -15,7 +14,7 @@ type RootProps = {
 }
 
 const Root = styled(Flex)<RootProps>`
-  width: 235px;
+  width: 240px;
 
   a {
     color: ${props => getLinkColor(props.currentPath)};
@@ -39,7 +38,7 @@ const Root = styled(Flex)<RootProps>`
 `
 
 const Item = styled(NavLink)`
-  ${titleFontStyle}
+  font-family: ${Variables.titleFont};
   font-size: 2rem;
   text-decoration: none;
 

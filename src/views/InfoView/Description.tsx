@@ -1,23 +1,34 @@
 import styled from '@emotion/styled'
 
 import * as Variables from 'styles/variable'
-import { titleFontStyle } from 'styles/mixins'
 import { mobile } from 'styles/responsive'
 
-export const Description = styled.div`
+type Props = {
+  color?: string
+}
+
+export const Description = styled.div<Props>`
+  margin-bottom: ${Variables.Spaces.large};
+
   p {
-    ${titleFontStyle};
-    font-size: 3.6rem;
-    line-height: 1.3;
-    color: ${Variables.Colors.shuttleGray};
+    font-size: 4rem;
+    color: ${p => p.color || Variables.Colors.shuttleGray};
+    margin-bottom: ${Variables.Spaces.medium};
 
+    font-weight: 300;
+    font-size 4rem;
     width: 100%;
-
-    margin-bottom: 7.5rem;
+    line-height: 1.2;
 
     ${mobile} {
       font-size: 1.8rem;
       margin-bottom: 3rem;
+    }
+
+    em {
+      color: ${Variables.Colors.dodgerBlue};
+      font-style: normal;
+      font-size 2rem;
     }
 
     a {

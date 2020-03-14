@@ -4,7 +4,7 @@ import withProps from 'recompose/withProps'
 import { withRouter, RouteComponentProps } from 'react-router'
 
 import separator from 'assets/icons/separator.svg'
-import { titleFont, Spaces, Colors } from 'styles/variable'
+import { titleFont, specialFont, Spaces, Colors } from 'styles/variable'
 import { mobile } from 'styles/responsive'
 import { Flex, Loader } from 'components'
 import { Project } from 'models'
@@ -22,10 +22,9 @@ const Root = styled(Flex)`
 `
 
 const Order = styled.h1`
-  font-family: ${titleFont}, sans-serif;
-  line-height: 0.5;
+  font-family: ${specialFont}, sans-serif;
   font-size: 4.8rem;
-  font-style: italic;
+  font-weight: 300;
   color: ${Colors.linkWater};
 
   ${mobile} {
@@ -56,7 +55,7 @@ const InformationContainer = styled(withProps({
 const Information = styled.p`
   font-family: ${titleFont};
   font-size: 1.4rem;
-  letter-spacing: 4px;
+  letter-spacing: 2px;
   text-transform: uppercase;
   color: ${Colors.linkWater};
 

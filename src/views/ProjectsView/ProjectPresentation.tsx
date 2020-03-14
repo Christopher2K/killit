@@ -61,34 +61,27 @@ const ProjectImage = styled.img<ProjectImageProps>`
   }
 `
 
-type ProjectTitleProps = {
-  imageKind: ImageKind
-}
-const ProjectTitle = styled.h1<ProjectTitleProps>`
+const ProjectTitle = styled.h1`
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: ${props => props.imageKind === 'vertical' ? '95%' : '70%'};
-  line-height: 1.2;
-  transform: translate(-50%, -50%);
+  width: 100%;
+  top: 0;
+  left: 0;
+  text-align: left;
+  padding: ${Spaces.medium};
   font-family: ${titleFont}, sans-serif;
-  text-align: center;
-  font-size: 4rem;
-  font-weight: bold;
+  font-size: 5rem;
+  font-weight: 300;
   color: ${Colors.linkWater};
   z-index: 5;
 
   ${mobile} {
     position: relative;
-    top: 0;
-    left: 0;
     font-size: 1.4rem;
     text-shadow: none;
     color: ${Colors.linkWater};
     margin: 5px 0 0 0;
     width: 100%;
-    transform: unset;
-    text-align: left;
+    padding: 0;
   }
 `
 
@@ -267,7 +260,7 @@ export const ProjectPresentation: React.FC<Props> = ({
                 src={url}
                 imageKind={imageKind}
               />
-              <ProjectTitle imageKind={imageKind}>{project.title}</ProjectTitle>
+              <ProjectTitle>{project.title}</ProjectTitle>
               <StyledProjectInfo project={project} showed={infoShowed} />
             </Overlay>
           </Link>

@@ -5,7 +5,7 @@ import withProps from 'recompose/withProps'
 
 import { Flex } from 'components'
 import { mobile } from 'styles/responsive'
-import { titleFont, Colors } from 'styles/variable'
+import { Colors, specialFont } from 'styles/variable'
 import { boolState } from 'sharedHooks/boolState'
 import { Project } from 'models'
 
@@ -52,10 +52,9 @@ const ProjectTitle = styled.h3<ProjectTitleProps>`
   writing-mode: vertical-rl;
   text-orientation: mixed;
   align-self: center;
-  font-family: ${titleFont}, sans-serif;
+  font-family: ${specialFont}, sans-serif;
   white-space: nowrap;
   font-size: 1.5rem;
-  font-weight: bold;
   color: ${Colors.paleSky};
 `
 

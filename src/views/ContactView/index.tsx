@@ -1,58 +1,34 @@
 import React from 'react'
 import styled from '@emotion/styled'
+import { css } from '@emotion/core'
+import PrismicDom from 'prismic-dom'
 import ResolvedApi from 'prismic-javascript/d.ts/ResolvedApi'
 import { Option, some, none } from 'fp-ts/lib/Option'
 
 import { PageContent, Container, Flex, Loader } from 'components'
-import { Spaces, Colors, bodyFont } from 'styles/variable'
-import { titleFontStyle } from 'styles/mixins'
+import { Spaces, Colors } from 'styles/variable'
 import { withPrismicApi } from 'utils/prismic'
-import behance from 'assets/icons/behance.svg'
-import linkedin from 'assets/icons/linkedin.svg'
-import instagram from 'assets/icons/instagram.svg'
 
-const Title = styled.h1`
-  ${titleFontStyle};
-  font-size: 3.6rem;
-  line-height: 1.3;
-  color: ${Colors.shuttleGray};
+const textStyle = css`
+  font-weight: 300;
+  font-size 4rem;
   width: 100%;
-
-  margin-bottom: ${Spaces.medium};
+  line-height: 1.2;
 `
 
-const Informations = styled(Flex)`
-  margin-bottom: ${Spaces.medium};
-`
-
-const LinkInformation = styled.a`
-  display: block;
-  text-decoration: none;
-  font-family: ${bodyFont};
+const Informations = styled.p`
+  ${textStyle};
   color: ${Colors.shuttleGray};
-  font-size: 1.5rem;
-  line-height: 1.5;
+  margin-bottom: ${Spaces.medium};
 `
 
 const SocialsContainer = styled(Flex)`
   width: 100%;
 `
 
-const IconLink = styled.a`
-  display: block;
-  text-decoration: none;
-  width: 70px;
-  height: auto;
-  margin-right: ${Spaces.tiny};
-
-  &:last-of-type {
-    margin-right: 0;
-    margin-bottom: 0;
-  }
-`
-
-const Icon = styled.img`
-  width: 100%;
+const Social = styled.div`
+  ${textStyle}
+  color: ${Colors.dodgerBlue};
 `
 
 const LoaderContainer = styled(Flex)`
@@ -62,7 +38,7 @@ const LoaderContainer = styled(Flex)`
 type ContactData = {
   behance: string
   instagram: string
-  linkedin: string
+  text: string
   telephone: string
   email: string
 }
@@ -82,9 +58,9 @@ export const ContactViewComponent: React.FC<Props> = props => {
           .then(document => {
             const { data } = document
             const contactData: ContactData = {
-              behance: data.behance.url,
-              instagram: data.instagram.url,
-              linkedin: data.linkedin.url,
+              behance: data.behance,
+              instagram: data.instagram,
+              text: PrismicDom.RichText.asHtml(data.text),
               telephone: data.telephone,
               email: data.email
             }
@@ -101,33 +77,19 @@ export const ContactViewComponent: React.FC<Props> = props => {
         {maybeContactData
           .map(contactData =>
             <>
-              <Title>Pour me contacter</Title>
               <Informations
+                dangerouslySetInnerHTML={{ __html: contactData.text }}
+              >
+              </Informations>
+              <SocialsContainer
                 direction='column'
                 justify='flex-start'
                 align='flex-start'
               >
-                <LinkInformation href={`tel:${contactData.telephone.split(' ').join()}`}>
-                  {contactData.telephone}
-                </LinkInformation>
-                <LinkInformation href={`mailto:${contactData.email}`}>
-                  {contactData.email}
-                </LinkInformation>
-              </Informations>
-              <SocialsContainer
-                direction='row'
-                justify='flex-start'
-                align='center'
-              >
-                <IconLink target='blank' href={contactData.behance}>
-                  <Icon src={behance} alt='Behance' />
-                </IconLink>
-                <IconLink target='blank' href={contactData.instagram}>
-                  <Icon src={instagram} alt='Instagram' />
-                </IconLink>
-                <IconLink target='blank' href={contactData.linkedin}>
-                  <Icon src={linkedin} alt='LinkedIn' />
-                </IconLink>
+                <Social>{contactData.email}</Social>
+                <Social>{contactData.telephone}</Social>
+                <Social>{contactData.behance}</Social>
+                <Social>{contactData.instagram}</Social>
               </SocialsContainer>
             </>
           )

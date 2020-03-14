@@ -23,10 +23,10 @@ const Paragraph = styled.div`
   font-size: 1.5rem;
   flex: 1;
   color: ${Variables.Colors.shuttleGray};
-  line-height: 150%;
 
   p {
     margin-bottom: ${Variables.Spaces.tiny};
+    line-height: 1.4;
 
     &:last-of-type {
       margin-bottom: 0;

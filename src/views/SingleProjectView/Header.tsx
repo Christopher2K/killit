@@ -71,10 +71,11 @@ const TitleContainer = styled(
 
 const Title = styled.h1`
   font-family: ${Variables.titleFont};
-  font-weight: bold;
+  font-weight: 300;
   font-size: 3.2rem;
   color: ${Variables.Colors.shuttleGray};
   margin-right: ${Variables.Spaces.tiny};
+  line-height: 1.3;
 
   ${mobile} {
     font-size: 2rem;
@@ -89,20 +90,12 @@ const Information = styled.h2`
   font-size: 1.3rem;
   color: ${Variables.Colors.shuttleGray};
 
-  &:first-of-type {
-    line-height: 2;
-  }
 
   ${mobile} {
     display: block;
     width: 100%;
-    line-height: 1.5;
     font-size: 1.05rem;
     text-align: left;
-
-    &:first-of-type {
-      line-height: 1.5;
-    }
   }
 `
 
@@ -133,6 +126,7 @@ const DekstopInformation = styled.p`
   margin-top: ${Variables.Spaces.large};
   font-size: 1.5rem;
   color: ${Variables.Colors.shuttleGray};
+  font-family: ${Variables.titleFont};
 
   ${mobile} {
     display: none;
