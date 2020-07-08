@@ -7,6 +7,7 @@ import { Option, some, none } from 'fp-ts/lib/Option'
 
 import { PageContent, Container, Flex, Loader } from 'components'
 import { Spaces, Colors } from 'styles/variable'
+import { mobile } from 'styles/responsive'
 import { withPrismicApi } from 'utils/prismic'
 
 const textStyle = css`
@@ -14,6 +15,10 @@ const textStyle = css`
   font-size 4rem;
   width: 100%;
   line-height: 1.2;
+
+  ${mobile} {
+    font-size: 1.8rem;
+  }
 `
 
 const Informations = styled.p`
@@ -29,6 +34,7 @@ const SocialsContainer = styled(Flex)`
 const Social = styled.div`
   ${textStyle}
   color: ${Colors.dodgerBlue};
+  word-break: break-all;
 `
 
 const LoaderContainer = styled(Flex)`
